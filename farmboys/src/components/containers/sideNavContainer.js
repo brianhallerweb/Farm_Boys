@@ -1,12 +1,13 @@
 import LoginContainer from "./loginContainer";
 import QueryContainer from "./queryContainer";
 import "../styles/sideNavContainer.css";
+import React from "react";
 
 const SideNavContainer = props => (
   <div className="sideNavContainer">
     <div>
       <div>
-        <LoginContainer />
+        <LoginContainer {...props} />
       </div>
       <div>
         <QueryContainer query={props.query} />

@@ -3,6 +3,7 @@ import "../styles/frontPageContainer.css";
 import SideNavContainer from "./sideNavContainer.js";
 import AdContainer from "./adContainer.js";
 import QueryContainer from "./queryContainer";
+import { Link } from "react-router-dom";
 
 export default class FrontPageContainer extends Component {
   state = {
@@ -19,6 +20,10 @@ export default class FrontPageContainer extends Component {
       .then(response => response.json())
       .then(ads => this.setState({ ads }));
 
+  loggedInUser = user => {
+    this.setState({ user: user });
+  };
+
   query = queryState =>
     fetch("/farm_boys/ads")
       .then(response => response.json())
@@ -27,9 +32,13 @@ export default class FrontPageContainer extends Component {
   render() {
     return (
       <div className="frontPageContainer">
-        <SideNavContainer query={this.query} />
+        <h1>Garden City Market</h1>
+        <h1>{this.state.user.username}</h1>
+        <SideNavContainer loggedInUser={this.loggedInUser} query={this.query} />
         <div style={{ float: "right", width: "73%" }}>
-          <QueryContainer />
+          <Link to="/create_ad">
+            <button>Make Ad</button>
+          </Link>
           <AdContainer ads={this.state.ads} />
         </div>
       </div>

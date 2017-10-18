@@ -10,6 +10,7 @@ module.exports = mongoose.model(
     type: String,
     description: String,
     image: String,
+    price: String,
     date: Date
   })
 );

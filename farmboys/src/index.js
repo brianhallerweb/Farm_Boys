@@ -6,12 +6,18 @@ import FrontPageContainer from "./components/containers/frontPageContainer";
 import AdPageContainer from "./components/containers/adPageContainer";
 import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
+import NewPostContainer from "./components/containers/newPostContainer";
+import SignUpPageContainer from "./components/containers/signUpPageContainer";
+import UserProfileContainer from "./components/containers/userProfileContainer";
 
 ReactDOM.render(
   <Router>
     <div>
       <Route exact path="/" component={FrontPageContainer} />
       <Route exact path="/ad_page/:_id" component={AdPageContainer} />
+      <Route exact path="/create_ad" component={NewPostContainer} />
+      <Route exact path="/signUp" component={SignUpPageContainer} />
+      <Route exact path="/my_profile/:_id" component={UserProfileContainer} />
     </div>
   </Router>,
   document.getElementById("root")

@@ -56,6 +56,19 @@ app.get("/farm_boys/ads/:_id", function(req, res) {
   });
 });
 
+app.get("/farm_boys/users/:_id", function(req, res) {
+  console.log("server.js::" + "run get request");
+  Users.findOne({ _id: req.params._id }, function(err, result) {
+    if (err) {
+      log("get", false, result);
+      res.status(500).json(err);
+    } else {
+      log("get", true, result);
+      res.json(result);
+    }
+  });
+});
+
 app.get("/farm_boys/users", function(req, res) {
   console.log("server.js::" + "run get request");
   Users.find(function(err, result) {
@@ -129,6 +142,7 @@ app.post("/farm_boys/ads", function(req, res) {
     type: req.body.type,
     description: req.body.description,
     image: req.body.image,
+    price: req.body.price,
     date: Date()
   }).save(function(err, result) {
     if (err) {
@@ -190,7 +204,9 @@ app.get("/farm_boys/ads", function(req, res) {
       log("get", true, result);
       res.json(result);
     }
-  });
+  })
+    .skip(parseInt(10))
+    .limit(parseInt(10));
 });
 
 app.put("/farm_boys/ads/:_id", function(req, res) {

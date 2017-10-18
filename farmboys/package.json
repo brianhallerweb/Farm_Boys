@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "body-parser": "^1.18.2",
+    "draft-js": "^0.10.3",
     "express": "^4.16.2",
     "mongoose": "^4.12.2",
     "mongoose-pagination": "^1.0.0",
