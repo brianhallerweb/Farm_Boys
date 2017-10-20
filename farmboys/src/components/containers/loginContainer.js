@@ -26,7 +26,7 @@ export default class LoginContainer extends Component {
           <div>
             <input
               onChange={e => this.setState({ password: e.target.value })}
-              type="text"
+              type="password"
             />
           </div>
           {/* TO DO ----OnClick for button------------------- */}

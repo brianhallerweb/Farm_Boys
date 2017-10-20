@@ -7,9 +7,6 @@ const SideNavContainer = props => (
   <div className="sideNavContainer">
     <div>
       <div>
-        <LoginContainer {...props} />
-      </div>
-      <div>
         <QueryContainer query={props.query} />
       </div>
     </div>

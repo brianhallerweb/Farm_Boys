@@ -4,12 +4,22 @@ import SideNavContainer from "./sideNavContainer.js";
 import AdContainer from "./adContainer.js";
 import QueryContainer from "./queryContainer";
 import { Link } from "react-router-dom";
+import ModalContainer from "./modalContainer.js";
 
 export default class FrontPageContainer extends Component {
-  state = {
-    ads: [],
-    user: {}
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      ads: [],
+      loginModal: false,
+      user: {}
+    };
+    this.resetModal = this.resetModal.bind(this);
+  }
+
+  resetModal() {
+    this.setState({ loginModal: false });
+  }
 
   componentWillMount() {
     this.updateAds();
@@ -30,6 +40,10 @@ export default class FrontPageContainer extends Component {
       .then(ads => this.setState({ ads }));
 
   render() {
+    let modalContainer = <div />;
+    if (this.state.loginModal) {
+      modalContainer = <ModalContainer resetModal={this.resetModal} />;
+    }
     return (
       <div className="frontPageContainer">
         <h1>Garden City Market</h1>
@@ -39,6 +53,13 @@ export default class FrontPageContainer extends Component {
           <Link to="/create_ad">
             <button>Make Ad</button>
           </Link>
+          {modalContainer}
+          <button
+            onClick={() =>
+              this.setState({ loginModal: !this.state.loginModal })}
+          >
+            Login
+          </button>
           <AdContainer ads={this.state.ads} />
         </div>
       </div>
