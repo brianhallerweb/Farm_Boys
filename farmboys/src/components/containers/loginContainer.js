@@ -16,6 +16,7 @@ export default class LoginContainer extends Component {
   }
 
   validateLogin(input) {
+    console.log("validateLogin has run");
     return fetch("/authenticate", {
       method: "post",
       headers: {
@@ -30,6 +31,9 @@ export default class LoginContainer extends Component {
         if (returnedObject.success) {
           bake_cookie("user", this.state.username);
           bake_cookie("userKey", returnedObject.token);
+          console.log("Success!", returnedObject.token);
+        } else {
+          console.log("Bummer dude!");
         }
       });
   }

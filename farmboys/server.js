@@ -76,7 +76,7 @@ app.post("/authenticate", function(req, res) {
           const payload = {
             admin: user.admin
           };
-          var token = jwt.sign(payload, app.get("superSecret"), {
+          var token = jwt.sign(payload, app.get("key"), {
             expiresIn: 60 * 60 * 1140
           });
 
