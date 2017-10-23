@@ -13,7 +13,7 @@ export default class QueryContainer extends Component {
       <div className="queryContainer">
         <input
           type="text"
-          defaultValue="Search Term"
+          placeholder="Search Term"
           onChange={e => this.setState({ search: e.target.value })}
         />
         <select onChange={e => this.setState({ search: e.target.value })}>

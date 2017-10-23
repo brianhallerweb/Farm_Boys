@@ -244,7 +244,7 @@ app.get("/farm_boys/ads", function(req, res) {
   console.log("server.js::" + "run get request");
 
   // Ads.find(query, fields, { skip: 10, limit: 5 }, function(err, results) { ... });
-  Ads.find(function(err, result) {
+  Ads.find({ type: "desert" }, "title description", function(err, result) {
     if (err) {
       log("get", false, result);
       res.status(500).json(err);
@@ -253,7 +253,7 @@ app.get("/farm_boys/ads", function(req, res) {
       res.json(result);
     }
   })
-    .skip(parseInt(10))
+    .skip(parseInt(0))
     .limit(parseInt(10));
 });
 
