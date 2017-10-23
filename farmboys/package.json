@@ -3,19 +3,23 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "base-64": "^0.1.0",
     "body-parser": "^1.18.2",
     "draft-js": "^0.10.3",
     "express": "^4.16.2",
+    "jsonwebtoken": "^8.1.0",
     "mongoose": "^4.12.2",
     "mongoose-pagination": "^1.0.0",
     "morgan": "^1.9.0",
     "react": "^16.0.0",
     "react-bootstrap": "^0.31.3",
+    "react-cookie": "^2.1.1",
     "react-dom": "^16.0.0",
     "react-modal": "^3.0.4",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "1.0.14"
+    "react-scripts": "1.0.14",
+    "sfcookies": "^1.0.2"
   },
   "proxy": "http://localhost:3001",
   "scripts": {

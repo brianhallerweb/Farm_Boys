@@ -4,6 +4,8 @@ var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 var Users = require("./models/users");
 var Ads = require("./models/ads");
+var jwt = require("jsonwebtoken");
+var config = require("./config.js");
 mongoose.connect("mongodb://localhost/farm_boys");
 var app = express();
 app.use(express.static("public"));
@@ -12,36 +14,82 @@ var morgan = require("morgan");
 
 app.use(morgan("dev"));
 
-// var apiRoutes = express.Router();
-//
-// apiRoutes.get("/users", function(req, res) {
-//   User.find({}, function(err, users) {
-//     res.json(users);
-//   });
-// });
-//
-// app.use("/api", apiRoutes);
+app.set("key", config.key);
 
-/*app.get("/setup", function(req, res) {
-  // create a sample user
-  var nick = new UserDat({
-    name: "Nick Cerminara",
-    password: "password",
-    admin: true
-  });
+var protectedRoute = express.Router();
+app.use("/api", protectedRoute);
 
-  // save the sample user
-  nick.save(function(err) {
-    if (err) throw err;
+protectedRoute.use(function(req, res, next) {
+  var token =
+    req.body.token ||
+    req.query.token ||
+    req.headers["x-access-token"] ||
+    req.headers["authorization"];
 
-    console.log("User saved successfully");
-    res.json({ success: true });
-  });
+  if (token) {
+    jwt.verify(token, app.get("key"), function(err, decoded) {
+      if (err) {
+        return res.json({
+          success: false,
+          message: "Failed to authenticate token."
+        });
+      } else {
+        req.decoded = decoded;
+        next();
+      }
+    });
+  } else {
+    return res.status(403).send({
+      success: false,
+      message: "No token provided."
+    });
+  }
 });
-*/
 
-// TO DO ---- CRUD REQUESTS FOR Users
-//-------------------------------------
+app.post("/authenticate", function(req, res) {
+  var auth = req.headers["authorization"];
+  var tmp = auth.split(" ");
+  var buf = new Buffer(tmp[1], "base64");
+  var plain_auth = buf.toString();
+  var creds = plain_auth.split(":");
+  var username = creds[0];
+  var password = creds[1];
+  console.log("log", username);
+  Users.findOne(
+    {
+      username: username
+    },
+    function(err, user) {
+      if (err) throw err;
+      if (!user) {
+        res.json({
+          success: false,
+          message: "Authentication failed. User not found."
+        });
+      } else if (user.username) {
+        if (user.password != password) {
+          res.json({
+            success: false,
+            message: "Authentication failed. Wrong password."
+          });
+        } else {
+          const payload = {
+            admin: user.admin
+          };
+          var token = jwt.sign(payload, app.get("superSecret"), {
+            expiresIn: 60 * 60 * 1140
+          });
+
+          res.json({
+            success: true,
+            message: "Validation successful",
+            token: token
+          });
+        }
+      }
+    }
+  );
+});
 
 app.get("/farm_boys/ads/:_id", function(req, res) {
   console.log("server.js::" + "run get request");
@@ -238,6 +286,18 @@ app.delete("/farm_boys/ads/:_id", function(req, res) {
       res.status(500).json(err);
     } else {
       log("delete", true, result);
+      res.json(result);
+    }
+  });
+});
+
+protectedRoute.get("/users/:name", function(req, res) {
+  Users.findOne({ name: req.params.name }, function(err, result) {
+    if (err) {
+      log("get", false, result);
+      res.status(500).json(err);
+    } else {
+      log("get", true, result);
       res.json(result);
     }
   });

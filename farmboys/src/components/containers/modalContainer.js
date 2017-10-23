@@ -27,9 +27,7 @@ export default class ModalContainer extends Component {
               this.props.resetModal();
             }}
           >
-            <Modal.Header closeButton>
-              <Modal.Title>Modal heading</Modal.Title>
-            </Modal.Header>
+            <Modal.Header closeButton />
             <Modal.Body>
               <LoginContainer {...this.props} />
             </Modal.Body>
