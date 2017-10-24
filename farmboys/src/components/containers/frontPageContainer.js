@@ -59,6 +59,7 @@ export default class FrontPageContainer extends Component {
     return (
       <div className="frontPageContainer">
         <h1>Garden City Market</h1>
+        <h2>Brians Branch</h2>
         <h1>{this.state.user.username}</h1>
         <SideNavContainer loggedInUser={this.loggedInUser} query={this.query} />
 
