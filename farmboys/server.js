@@ -46,6 +46,19 @@ protectedRoute.use(function(req, res, next) {
   }
 });
 
+protectedRoute.get("/farm_boys/users", function(req, res) {
+  console.log("server.js::" + "run get request");
+  Users.find({ username: req.decoded.username }, function(err, result) {
+    if (err) {
+      log("get", false, result);
+      res.status(500).json(err);
+    } else {
+      log("get", true, result);
+      res.json(result);
+    }
+  });
+});
+
 app.post("/authenticate", function(req, res) {
   var auth = req.headers["authorization"];
   var tmp = auth.split(" ");
@@ -54,7 +67,6 @@ app.post("/authenticate", function(req, res) {
   var creds = plain_auth.split(":");
   var username = creds[0];
   var password = creds[1];
-  console.log("log", username);
   Users.findOne(
     {
       username: username
@@ -74,9 +86,10 @@ app.post("/authenticate", function(req, res) {
           });
         } else {
           const payload = {
-            admin: user.admin
+            admin: user.admin,
+            username: user.username
           };
-          var token = jwt.sign(payload, app.get("superSecret"), {
+          var token = jwt.sign(payload, app.get("key"), {
             expiresIn: 60 * 60 * 1140
           });
 
@@ -203,48 +216,16 @@ app.post("/farm_boys/ads", function(req, res) {
   });
 });
 
-// app.get("/farm_boys/ads", function(req, res) {
-//   console.log("server.js::" + "run get request");
-//
-//   // Ads.find(query, fields, { skip: 10, limit: 5 }, function(err, results) { ... });
-//   Ads.find({ $or: [{ type: "desert" }, { type: "Meat" }] }, function(
-//     err,
-//     result
-//   ) {
-//     if (err) {
-//       log("get", false, result);
-//       res.status(500).json(err);
-//     } else {
-//       log("get", true, result);
-//       res.json(result);
-//     }
-//   });
-// });
-//
-// app.get("/farm_boys/ads/:skip/:limit", function(req, res) {
-//   console.log("server.js::" + "run get request");
-//   let skip = req.params.skip;
-//   let limit = req.params.limit;
-//
-//   // Ads.find(query, fields, { skip: 10, limit: 5 }, function(err, results) { ... });
-//   Ads.find(function(err, result) {
-//     if (err) {
-//       log("get", false, result);
-//       res.status(500).json(err);
-//     } else {
-//       log("get", true, result);
-//       res.json(result);
-//     }
-//   })
-//     .skip(parseInt(skip))
-//     .limit(parseInt(limit));
-// });
-
 app.get("/farm_boys/ads", function(req, res) {
   console.log("server.js::" + "run get request");
-
-  // Ads.find(query, fields, { skip: 10, limit: 5 }, function(err, results) { ... });
-  Ads.find(function(err, result) {
+  let filter = {};
+  if (req.query.type) {
+    filter.type = req.query.type;
+  }
+  if (req.query.title) {
+    filter.title = req.query.title;
+  }
+  Ads.find(filter, function(err, result) {
     if (err) {
       log("get", false, result);
       res.status(500).json(err);
@@ -253,7 +234,7 @@ app.get("/farm_boys/ads", function(req, res) {
       res.json(result);
     }
   })
-    .skip(parseInt(10))
+    .skip(parseInt(0))
     .limit(parseInt(10));
 });
 

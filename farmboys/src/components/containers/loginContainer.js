@@ -16,6 +16,7 @@ export default class LoginContainer extends Component {
   }
 
   validateLogin(input) {
+    console.log("validateLogin has run");
     return fetch("/authenticate", {
       method: "post",
       headers: {
@@ -28,8 +29,10 @@ export default class LoginContainer extends Component {
       .then(response => response.json())
       .then(returnedObject => {
         if (returnedObject.success) {
-          bake_cookie("user", this.state.username);
           bake_cookie("userKey", returnedObject.token);
+          console.log("Success!", returnedObject.token);
+        } else {
+          console.log("Bummer dude!");
         }
       });
   }
@@ -54,7 +57,6 @@ export default class LoginContainer extends Component {
               />
             </div>
           </div>
-          {/* TO DO ----OnClick for button------------------- */}
           <button
             onClick={e => {
               this.validateLogin({
@@ -62,19 +64,6 @@ export default class LoginContainer extends Component {
                 password: this.state.password
               });
             }}
-            //   fetch("/farm_boys/users")
-            //     .then(response => response.json())
-            //     .then(users => {
-            //       users.forEach(index => {
-            //         if (
-            //           this.state.username === index.username &&
-            //           this.state.password === index.password
-            //         ) {
-            //           this.props.loggedInUser(index);
-            //         }
-            //       });
-            //     });
-            // }}
           >
             Login
           </button>

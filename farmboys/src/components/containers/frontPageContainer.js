@@ -5,6 +5,7 @@ import AdContainer from "./adContainer.js";
 import QueryContainer from "./queryContainer";
 import { Link } from "react-router-dom";
 import ModalContainer from "./modalContainer.js";
+import { read_cookie } from "sfcookies";
 
 export default class FrontPageContainer extends Component {
   constructor(props) {
@@ -12,9 +13,22 @@ export default class FrontPageContainer extends Component {
     this.state = {
       ads: [],
       loginModal: false,
-      user: {}
+      user: []
     };
     this.resetModal = this.resetModal.bind(this);
+  }
+
+  fetchUser(self) {
+    fetch("/api/farm_boys/users", {
+      headers: {
+        authorization: read_cookie("userKey")
+      }
+    })
+      .then(response => response.json())
+      .then(user => {
+        self.setState({ user: user });
+        console.log(user);
+      });
   }
 
   resetModal() {
@@ -23,6 +37,7 @@ export default class FrontPageContainer extends Component {
 
   componentWillMount() {
     this.updateAds();
+    this.fetchUser(this);
   }
 
   updateAds = () =>
@@ -30,14 +45,11 @@ export default class FrontPageContainer extends Component {
       .then(response => response.json())
       .then(ads => this.setState({ ads }));
 
-  loggedInUser = user => {
-    this.setState({ user: user });
-  };
-
-  query = queryState =>
-    fetch("/farm_boys/ads")
+  query = queryString => {
+    fetch("/farm_boys/ads/" + queryString)
       .then(response => response.json())
       .then(ads => this.setState({ ads }));
+  };
 
   render() {
     let modalContainer = <div />;
