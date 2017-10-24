@@ -16,6 +16,7 @@ export default class SignUpPageContainer extends Component {
   }
 
   createUser() {
+    alert("yo");
     let contactObject = {};
     fetch("/farm_boys/users", {
       method: "post",
