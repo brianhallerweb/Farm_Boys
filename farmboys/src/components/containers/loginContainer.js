@@ -57,6 +57,13 @@ export default class LoginContainer extends Component {
               />
             </div>
           </div>
+          <div>Password</div>
+          <div>
+            <input
+              onChange={e => this.setState({ password: e.target.value })}
+              type="password"
+            />
+          </div>
           <button
             onClick={e => {
               this.validateLogin({
