@@ -1,2 +1,21 @@
 .frontPageContainer {
+  background: url("./img/farmersMarket.jpg");
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 5px solid #000000;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+.frontPageContainer h1 {
+  font-family: cursive;
+  font-size: 100px;
+  text-align: center;
+  color: #0bbf1d;
+  text-shadow: 5px 5px #000000;
+}
+.frontPageContainer h1::first-letter {
+  color: #0bbf12;
+  font-size: 300px;
 }

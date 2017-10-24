@@ -49,19 +49,17 @@ export default class FrontPageContainer extends Component {
         <h1>Garden City Market</h1>
         <h1>{this.state.user.username}</h1>
         <SideNavContainer loggedInUser={this.loggedInUser} query={this.query} />
-        <div style={{ float: "right", width: "73%" }}>
-          <Link to="/create_ad">
-            <button>Make Ad</button>
-          </Link>
-          {modalContainer}
-          <button
-            onClick={() =>
-              this.setState({ loginModal: !this.state.loginModal })}
-          >
-            Login
-          </button>
-          <AdContainer ads={this.state.ads} />
-        </div>
+
+        <Link to="/create_ad">
+          <button>Make Ad</button>
+        </Link>
+        {modalContainer}
+        <button
+          onClick={() => this.setState({ loginModal: !this.state.loginModal })}
+        >
+          Login
+        </button>
+        <AdContainer ads={this.state.ads} />
       </div>
     );
   }

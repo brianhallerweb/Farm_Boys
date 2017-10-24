@@ -44,7 +44,7 @@ export default class NewPostContainer extends Component {
   render() {
     console.log(this.types[0]);
     return (
-      <div id="content">
+      <div className="content">
         <span>
           <h1>Make an Ad</h1>
 

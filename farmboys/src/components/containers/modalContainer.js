@@ -17,7 +17,7 @@ export default class ModalContainer extends Component {
   render() {
     if (this.state.showModal) {
       return (
-        <div>
+        <div className="modal">
           <p>Click to get the full Modal experience!</p>
           <Button onClick={this.open}>Launch demo modal</Button>
           <Modal

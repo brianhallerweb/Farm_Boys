@@ -38,19 +38,21 @@ export default class LoginContainer extends Component {
     return (
       <div className="loginContainer">
         <div>
-          <div>Username</div>
-          <div>
-            <input
-              onChange={e => this.setState({ username: e.target.value })}
-              type="text"
-            />
-          </div>
-          <div>Password</div>
-          <div>
-            <input
-              onChange={e => this.setState({ password: e.target.value })}
-              type="password"
-            />
+          <div className="userName">
+            <div>Username</div>
+            <div>
+              <input
+                onChange={e => this.setState({ username: e.target.value })}
+                type="text"
+              />
+            </div>
+            <div>Password</div>
+            <div>
+              <input
+                onChange={e => this.setState({ password: e.target.value })}
+                type="password"
+              />
+            </div>
           </div>
           {/* TO DO ----OnClick for button------------------- */}
           <button
