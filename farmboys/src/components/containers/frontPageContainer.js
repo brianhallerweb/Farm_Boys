@@ -16,26 +16,24 @@ export default class FrontPageContainer extends Component {
       user: []
     };
     this.resetModal = this.resetModal.bind(this);
+    this.fetchUser = this.fetchUser.bind(this);
   }
 
-  fetchUser(self) {
+  fetchUser() {
     fetch("/api/farm_boys/users", {
       headers: {
         authorization: read_cookie("userKey")
       }
     })
       .then(response => response.json())
-      .then(user => {
-        self.setState({ user: user });
-        console.log(user);
-      });
+      .then(user => this.setState({ user: user }));
   }
 
   resetModal() {
     this.setState({ loginModal: false });
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.updateAds();
     this.fetchUser(this);
   }
@@ -52,16 +50,24 @@ export default class FrontPageContainer extends Component {
   };
 
   render() {
-    let modalContainer = <div />;
+    console.log(this.state.user);
+    let modalContainer = "";
+    let greeting = "";
     if (this.state.loginModal) {
       modalContainer = <ModalContainer resetModal={this.resetModal} />;
     }
+    if (this.state.user !== [] && this.state.user.sucess === undefined) {
+      greeting = (
+        <h2 style={{ float: "right", margin: "50px", marginLeft: "-50%" }}>
+          Welcome, {this.state.user.username}
+        </h2>
+      );
+    }
     return (
       <div className="frontPageContainer">
+        {greeting}
         <h1>Garden City Market</h1>
-        <h1>{this.state.user.username}</h1>
         <SideNavContainer loggedInUser={this.loggedInUser} query={this.query} />
-
         <Link to="/create_ad">
           <button>Make Ad</button>
         </Link>

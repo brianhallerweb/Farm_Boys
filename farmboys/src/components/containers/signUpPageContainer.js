@@ -8,16 +8,15 @@ export default class SignUpPageContainer extends Component {
     super(props);
     this.state = {
       username: "",
-      contact: {},
+      phonenumber: "",
       password: "",
       email: "",
-      passwordConfirm: ""
+      passwordConfirm: "",
+      admin: false
     };
   }
 
   createUser() {
-    alert("yo");
-    let contactObject = {};
     fetch("/farm_boys/users", {
       method: "post",
       headers: {
@@ -42,6 +41,13 @@ export default class SignUpPageContainer extends Component {
     }
     return (
       <div className="signUpPageContainer">
+        <div>
+          <input
+            onChange={e => this.setState({ username: e.target.value })}
+            type="text"
+            placeholder="username"
+          />
+        </div>
         <div>
           <input
             onChange={e => this.setState({ email: e.target.value })}

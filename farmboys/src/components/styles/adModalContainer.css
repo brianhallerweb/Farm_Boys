@@ -1,0 +1,9 @@
+.modal-container {
+  position: fixed;
+}
+.modal-container .modal,
+.modal-container .modal-backdrop {
+  position: absolute;
+}
+.modalBody {
+}

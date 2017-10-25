@@ -3,14 +3,14 @@ import "../styles/queryContainer.css";
 
 export default class QueryContainer extends Component {
   state = {
-    type: "Dairy",
+    type: "All Types",
     search: ""
   };
 
   buildQuery() {
     let typeQuery = "";
     let searchQuery = "";
-    if (this.state.type !== "") {
+    if (this.state.type !== "All Types") {
       typeQuery = "?type=" + this.state.type;
     }
     if (this.state.search !== "") {
@@ -29,6 +29,7 @@ export default class QueryContainer extends Component {
           onChange={e => this.setState({ search: e.target.value })}
         />
         <select onChange={e => this.setState({ type: e.target.value })}>
+          <option>All Types</option>
           <option>Dairy</option>
           <option>Produce</option>
           <option>Meat</option>
