@@ -3,8 +3,9 @@ import "../styles/frontPageContainer.css";
 import SideNavContainer from "./sideNavContainer.js";
 import AdContainer from "./adContainer.js";
 import QueryContainer from "./queryContainer";
+import NewPostModalContainer from "./newPostModalContainer";
 import { Link } from "react-router-dom";
-import ModalContainer from "./modalContainer.js";
+import LoginButton from "./LoginButton.js";
 import { read_cookie } from "sfcookies";
 
 export default class FrontPageContainer extends Component {
@@ -13,30 +14,55 @@ export default class FrontPageContainer extends Component {
     this.state = {
       ads: [],
       loginModal: false,
-      user: []
+      adModal: false,
+      user: undefined
     };
-    this.resetModal = this.resetModal.bind(this);
-    this.fetchUser = this.fetchUser.bind(this);
   }
 
-  fetchUser() {
+  fetchUser = () => {
     fetch("/api/farm_boys/users", {
       headers: {
         authorization: read_cookie("userKey")
       }
     })
       .then(response => response.json())
-      .then(user => this.setState({ user: user }));
-  }
+      .then(user => {
+        console.log(user);
+        if (user.email) {
+          this.setState({ user: user });
+        }
+        console.log("returned user", this.state.user);
+      });
+  };
 
-  resetModal() {
-    this.setState({ loginModal: false });
-  }
+  toggleLoginModal = () => {
+    this.setState({ loginModal: !this.state.loginModal });
+  };
+
+  resetAdModal = () => {
+    this.setState({ adModal: false });
+  };
 
   componentDidMount() {
     this.updateAds();
     this.fetchUser(this);
   }
+
+  clickProfile = e => {
+    if (!this.state.user) {
+      e.preventDefault();
+      this.setState({ loginModal: true });
+    }
+  };
+
+  clickAddAd = e => {
+    console.log("add clicked", this.state.user);
+    if (!this.state.user) {
+      this.setState({ loginModal: true });
+    } else {
+      this.setState({ adModal: true });
+    }
+  };
 
   updateAds = () =>
     fetch("/farm_boys/ads")
@@ -50,13 +76,11 @@ export default class FrontPageContainer extends Component {
   };
 
   render() {
-    console.log(this.state.user);
     let modalContainer = "";
+    let newPostModalContainer = "";
     let greeting = "";
-    if (this.state.loginModal) {
-      modalContainer = <ModalContainer resetModal={this.resetModal} />;
-    }
-    if (this.state.user !== [] && this.state.user.sucess === undefined) {
+
+    if (this.state.user) {
       greeting = (
         <h2 style={{ float: "right", margin: "50px", marginLeft: "-50%" }}>
           Welcome, {this.state.user.username}
@@ -68,15 +92,22 @@ export default class FrontPageContainer extends Component {
         {greeting}
         <h1>Garden City Market</h1>
         <SideNavContainer loggedInUser={this.loggedInUser} query={this.query} />
-        <Link to="/create_ad">
-          <button>Make Ad</button>
-        </Link>
-        {modalContainer}
-        <button
-          onClick={() => this.setState({ loginModal: !this.state.loginModal })}
+        <button onClick={this.clickAddAd}>Make Ad</button>
+        {this.state.adModal ? (
+          <NewPostModalContainer resetModal={this.resetAdModal} />
+        ) : (
+          ""
+        )}
+        <LoginButton
+          resetModal={this.toggleLoginModal}
+          display={this.state.loginModal}
+        />
+        <Link
+          onClick={this.clickProfile}
+          to={`/my_profile/${this.state.user && this.state.user._id}`}
         >
-          Login
-        </button>
+          <button>My Account</button>
+        </Link>
         <AdContainer ads={this.state.ads} />
       </div>
     );

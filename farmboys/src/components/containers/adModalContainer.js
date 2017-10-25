@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Button, Modal } from "react-bootstrap";
 import "../styles/adModalContainer.css";
 import { Link } from "react-router-dom";
+import draftToHtml from "draftjs-to-html";
 
 export default class AdModalContainer extends Component {
   constructor(props) {
@@ -35,7 +36,14 @@ export default class AdModalContainer extends Component {
                 <h2>Produce type: {this.props.ad.type}</h2>
               </div>
               <div>
-                <h2>About: {this.props.ad.description}</h2>
+                <h2>
+                  Description:{" "}
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: draftToHtml(this.props.ad.description)
+                    }}
+                  />
+                </h2>
               </div>
               <div>
                 <h2>Price: {this.props.ad.price}</h2>
