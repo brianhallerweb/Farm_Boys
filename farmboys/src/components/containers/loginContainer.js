@@ -3,6 +3,7 @@ import "../styles/loginContainer.css";
 import { Link } from "react-router-dom";
 import { bake_cookie, read_cookie, delete_cookie } from "sfcookies";
 import "whatwg-fetch";
+import SignUpModalContainer from "./signUpModalContainer";
 
 let base64 = require("base-64");
 
@@ -11,12 +12,12 @@ export default class LoginContainer extends Component {
     super(props);
     this.state = {
       username: "",
-      password: ""
+      password: "",
+      signUpModal: false
     };
   }
 
   validateLogin(input) {
-    console.log("validateLogin has run");
     return fetch("/authenticate", {
       method: "post",
       headers: {
@@ -30,13 +31,17 @@ export default class LoginContainer extends Component {
       .then(returnedObject => {
         if (returnedObject.success) {
           bake_cookie("userKey", returnedObject.token);
-          console.log("Success!", returnedObject.token);
           this.props.resetModal();
+          this.props.fetchUser();
         } else {
-          console.log("Bummer dude!");
+          alert("Invalid username or password");
         }
       });
   }
+
+  signUpToggle = () => {
+    this.setState({ signUpModal: !this.state.signUpModal });
+  };
 
   render() {
     return (
@@ -70,8 +75,9 @@ export default class LoginContainer extends Component {
               </button>
             </div>
             <div style={{ margin: "10px" }}>
-              <Link to="/signUp">Sign Up!</Link>
+              <button onClick={() => this.signUpToggle()}>Sign Up!</button>
             </div>
+            {this.state.signUpModal ? <SignUpModalContainer /> : ""}
           </div>
         </div>
       </div>

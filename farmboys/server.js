@@ -237,6 +237,7 @@ app.get("/farm_boys/ads", function(req, res) {
     }
   })
     .skip(parseInt(0))
+    .sort("-date")
     .limit(parseInt(10));
 });
 
@@ -276,6 +277,19 @@ app.delete("/farm_boys/ads/:_id", function(req, res) {
 
 protectedRoute.get("/users/:name", function(req, res) {
   Users.findOne({ name: req.params.name }, function(err, result) {
+    if (err) {
+      log("get", false, result);
+      res.status(500).json(err);
+    } else {
+      log("get", true, result);
+      res.json(result);
+    }
+  });
+});
+
+protectedRoute.get("/users/:_id", function(req, res) {
+  console.log("working?");
+  Users.findOne({ _id: req.params._id }, function(err, result) {
     if (err) {
       log("get", false, result);
       res.status(500).json(err);

@@ -34,6 +34,7 @@ export default class QueryContainer extends Component {
           <option>Produce</option>
           <option>Meat</option>
           <option>Dessert</option>
+          <option>Other</option>
         </select>
         <button onClick={() => query(this.buildQuery())}>Submit</button>
       </div>

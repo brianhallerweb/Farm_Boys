@@ -29,18 +29,18 @@ export default class NewPostModalContainer extends Component {
     this.state = {
       showModal: true,
       title: "",
-      type: "",
-      firstElement: false,
+      type: "Meat",
       contentState
     };
   }
 
   types = [
-    <option>Choose a Type</option>,
+    ,
     <option>Meat</option>,
     <option>Dairy</option>,
     <option>Dessert</option>,
-    <option>Produce</option>
+    <option>Produce</option>,
+    <option>Other</option>
   ];
 
   onContentStateChange: Function = contentState => {
@@ -57,9 +57,14 @@ export default class NewPostModalContainer extends Component {
         "Content-Type": "application/json"
       },
       body: JSON.stringify(this.state)
-    }).then(function(response) {
-      return response.json();
-    });
+    })
+      .then(function(response) {
+        return response.json();
+      })
+      .then(() => {
+        this.props.updateAds();
+        this.props.resetModal();
+      });
   }
 
   render() {
@@ -86,12 +91,8 @@ export default class NewPostModalContainer extends Component {
                     />
                     <select
                       onChange={e => {
-                        if (!this.state.firstElement) {
-                          this.types.shift();
-                        }
                         this.setState({
-                          type: e.target.value,
-                          firstElement: true
+                          type: e.target.value
                         });
                       }}
                     >

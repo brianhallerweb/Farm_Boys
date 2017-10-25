@@ -17,20 +17,17 @@ export default class AdContainer extends Component {
   render() {
     return (
       <div className="adContainer">
-        <ul>
+        <ul className="list">
           {this.props.ads.map(ad => (
-            <li>
-              <h3>{ad.title}</h3>
-              <button
-                onClick={() =>
-                  this.setState({
-                    modal: (
-                      <AdModalContainer resetModal={this.resetModal} ad={ad} />
-                    )
-                  })}
-              >
-                View Listing
-              </button>
+            <li
+              onClick={() =>
+                this.setState({
+                  modal: (
+                    <AdModalContainer resetModal={this.resetModal} ad={ad} />
+                  )
+                })}
+            >
+              {ad.title}
             </li>
           ))}
         </ul>

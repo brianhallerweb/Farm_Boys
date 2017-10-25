@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import "../styles/frontPageContainer.css";
 import SideNavContainer from "./sideNavContainer.js";
 import AdContainer from "./adContainer.js";
-import QueryContainer from "./queryContainer";
 import NewPostModalContainer from "./newPostModalContainer";
 import { Link } from "react-router-dom";
 import LoginButton from "./LoginButton.js";
@@ -27,11 +26,9 @@ export default class FrontPageContainer extends Component {
     })
       .then(response => response.json())
       .then(user => {
-        console.log(user);
         if (user.email) {
           this.setState({ user: user });
         }
-        console.log("returned user", this.state.user);
       });
   };
 
@@ -56,7 +53,6 @@ export default class FrontPageContainer extends Component {
   };
 
   clickAddAd = e => {
-    console.log("add clicked", this.state.user);
     if (!this.state.user) {
       this.setState({ loginModal: true });
     } else {
@@ -76,14 +72,14 @@ export default class FrontPageContainer extends Component {
   };
 
   render() {
-    let modalContainer = "";
-    let newPostModalContainer = "";
     let greeting = "";
-
     if (this.state.user) {
       greeting = (
         <h2 style={{ float: "right", margin: "50px", marginLeft: "-50%" }}>
-          Welcome, {this.state.user.username}
+          Welcome,{" "}
+          <Link to={`/my_profile/${this.state.user && this.state.user._id}`}>
+            {this.state.user.username}
+          </Link>
         </h2>
       );
     }
@@ -94,13 +90,18 @@ export default class FrontPageContainer extends Component {
         <SideNavContainer loggedInUser={this.loggedInUser} query={this.query} />
         <button onClick={this.clickAddAd}>Make Ad</button>
         {this.state.adModal ? (
-          <NewPostModalContainer resetModal={this.resetAdModal} />
+          <NewPostModalContainer
+            resetModal={this.resetAdModal}
+            updateAds={this.updateAds}
+            {...this.props}
+          />
         ) : (
           ""
         )}
         <LoginButton
           resetModal={this.toggleLoginModal}
           display={this.state.loginModal}
+          fetchUser={this.fetchUser}
         />
         <Link
           onClick={this.clickProfile}
