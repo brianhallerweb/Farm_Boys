@@ -48,7 +48,7 @@ protectedRoute.use(function(req, res, next) {
 
 protectedRoute.get("/farm_boys/users", function(req, res) {
   console.log("server.js::" + "run get request");
-  Users.find({ username: req.decoded.username }, function(err, result) {
+  Users.findOne({ username: req.decoded.username }, function(err, result) {
     if (err) {
       log("get", false, result);
       res.status(500).json(err);
@@ -145,10 +145,12 @@ app.get("/farm_boys/users", function(req, res) {
 
 app.post("/farm_boys/users", function(req, res) {
   console.log("server.js::" + "run post request");
+  console.log("req.body", req.body);
   new Users({
     username: req.body.username,
-    contact: req.body.contact,
+    phonenumber: req.body.phonenumber,
     password: req.body.password,
+    email: req.body.email,
     admin: req.body.admin
   }).save(function(err, result) {
     if (err) {

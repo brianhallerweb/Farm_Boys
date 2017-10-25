@@ -31,6 +31,7 @@ export default class LoginContainer extends Component {
         if (returnedObject.success) {
           bake_cookie("userKey", returnedObject.token);
           console.log("Success!", returnedObject.token);
+          this.props.resetModal();
         } else {
           console.log("Bummer dude!");
         }
@@ -42,39 +43,36 @@ export default class LoginContainer extends Component {
       <div className="loginContainer">
         <div>
           <div className="userName">
-            <div>Username</div>
+            <div style={{ margin: "10px" }}>Username</div>
             <div>
               <input
                 onChange={e => this.setState({ username: e.target.value })}
                 type="text"
               />
             </div>
-            <div>Password</div>
-            <div>
+            <div style={{ margin: "10px" }}>Password</div>
+            <div style={{ margin: "10px" }}>
               <input
                 onChange={e => this.setState({ password: e.target.value })}
                 type="password"
               />
             </div>
+            <div style={{ margin: "10px" }}>
+              <button
+                onClick={e => {
+                  this.validateLogin({
+                    username: this.state.username,
+                    password: this.state.password
+                  });
+                }}
+              >
+                Login
+              </button>
+            </div>
+            <div style={{ margin: "10px" }}>
+              <Link to="/signUp">Sign Up!</Link>
+            </div>
           </div>
-          <div>Password</div>
-          <div>
-            <input
-              onChange={e => this.setState({ password: e.target.value })}
-              type="password"
-            />
-          </div>
-          <button
-            onClick={e => {
-              this.validateLogin({
-                username: this.state.username,
-                password: this.state.password
-              });
-            }}
-          >
-            Login
-          </button>
-          <Link to="/signUp">Sign Up!</Link>
         </div>
       </div>
     );

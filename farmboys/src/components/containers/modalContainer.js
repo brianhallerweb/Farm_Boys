@@ -9,11 +9,6 @@ export default class ModalContainer extends Component {
     this.state = { showModal: true };
   }
 
-  // open() {
-  //
-  //   this.setState({ showModal: true });
-  // }
-
   render() {
     if (this.state.showModal) {
       return (
