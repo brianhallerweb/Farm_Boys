@@ -1,19 +1,20 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import draftToHtml from "draftjs-to-html";
 import "../styles/adPageContainer.css";
 import "whatwg-fetch";
 
 export default class AdPageContainer extends Component {
   state = {
     title: "",
-    // image: [], adding images later
-    description: ""
+    markup: ""
   };
 
   getAd(id) {
     fetch("/farm_boys/ads/" + id)
       .then(response => response.json())
-      .then(ad => this.setState(ad));
+      .then(ad =>
+        this.setState({ title: ad.title, markup: draftToHtml(ad.description) })
+      );
   }
 
   componentWillReceiveProps(newProps) {
@@ -34,7 +35,11 @@ export default class AdPageContainer extends Component {
       <div className="adPageContainer">
         <div>
           <h1>{this.state.title}</h1>
-          <p>{this.state.description}</p>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: this.state.markup
+            }}
+          />
         </div>
       </div>
     );
