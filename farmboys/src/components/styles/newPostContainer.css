@@ -17,3 +17,15 @@
   border: 5px solid #000000;
   padding: 6px;
 }
+
+/*Beginning of Brian's special css*/
+.targetAll {
+  height: 400px;
+  width: 600px;
+}
+.targetEditor {
+  height: 300px;
+  max-height: 300px;
+  border: 1px solid #f1f1f1;
+}
+/*End of Brian's special css*/

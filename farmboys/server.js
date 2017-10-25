@@ -203,7 +203,7 @@ app.post("/farm_boys/ads", function(req, res) {
     user: req.body.user,
     title: req.body.title,
     type: req.body.type,
-    description: req.body.description,
+    description: req.body.contentState,
     image: req.body.image,
     price: req.body.price,
     date: Date()
