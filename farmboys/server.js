@@ -200,7 +200,7 @@ app.delete("/farm_boys/users/:_id", function(req, res) {
 app.post("/farm_boys/ads", function(req, res) {
   console.log("server.js::" + "run post request");
   new Ads({
-    user: req.body.user,
+    userId: req.body.userId,
     title: req.body.title,
     type: req.body.type,
     description: req.body.contentState,
@@ -219,6 +219,7 @@ app.post("/farm_boys/ads", function(req, res) {
 });
 
 app.get("/farm_boys/ads", function(req, res) {
+  console.log("working?");
   console.log("server.js::" + "run get request");
   let filter = {};
   if (req.query.type) {
@@ -226,6 +227,9 @@ app.get("/farm_boys/ads", function(req, res) {
   }
   if (req.query.title) {
     filter.title = req.query.title;
+  }
+  if (req.query.id) {
+    filter.userId = req.query.id;
   }
   Ads.find(filter, function(err, result) {
     if (err) {

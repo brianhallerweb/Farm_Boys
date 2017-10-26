@@ -5,7 +5,7 @@ import AdContainer from "./adContainer.js";
 import NewPostModalContainer from "./newPostModalContainer";
 import { Link } from "react-router-dom";
 import LoginButton from "./LoginButton.js";
-import { read_cookie } from "sfcookies";
+import { read_cookie, delete_cookie } from "sfcookies";
 
 export default class FrontPageContainer extends Component {
   constructor(props) {
@@ -93,16 +93,28 @@ export default class FrontPageContainer extends Component {
           <NewPostModalContainer
             resetModal={this.resetAdModal}
             updateAds={this.updateAds}
+            user={this.state.user}
             {...this.props}
           />
         ) : (
           ""
         )}
-        <LoginButton
-          resetModal={this.toggleLoginModal}
-          display={this.state.loginModal}
-          fetchUser={this.fetchUser}
-        />
+        {this.state.user ? (
+          <button
+            onClick={() => {
+              delete_cookie("userKey");
+              this.setState({ user: undefined });
+            }}
+          >
+            Logout
+          </button>
+        ) : (
+          <LoginButton
+            resetModal={this.toggleLoginModal}
+            display={this.state.loginModal}
+            fetchUser={this.fetchUser}
+          />
+        )}
         <Link
           onClick={this.clickProfile}
           to={`/my_profile/${this.state.user && this.state.user._id}`}

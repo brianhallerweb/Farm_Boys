@@ -6,7 +6,7 @@ module.exports = mongoose.model(
   "Ads",
   new Schema(
     {
-      user: String,
+      userId: String,
       title: String,
       type: String,
       description: Object,

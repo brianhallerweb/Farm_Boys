@@ -28,14 +28,18 @@ export default class NewPostModalContainer extends Component {
     const contentState = convertFromRaw(content);
     this.state = {
       showModal: true,
+      userId: "",
       title: "",
-      type: "Meat",
+      type: "",
+      price: "",
       contentState
     };
   }
 
   types = [
-    ,
+    <option selected disabled hidden>
+      Choose Type
+    </option>,
     <option>Meat</option>,
     <option>Dairy</option>,
     <option>Dessert</option>,
@@ -56,7 +60,13 @@ export default class NewPostModalContainer extends Component {
         Accept: "application/json",
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(this.state)
+      body: JSON.stringify({
+        userId: this.props.user._id,
+        title: this.state.title,
+        type: this.state.type,
+        price: this.state.price,
+        contentState: this.state.contentState
+      })
     })
       .then(function(response) {
         return response.json();
@@ -88,6 +98,11 @@ export default class NewPostModalContainer extends Component {
                       type="text"
                       placeholder="Title"
                       onChange={e => this.setState({ title: e.target.value })}
+                    />
+                    <input
+                      type="text"
+                      placeholder="Price"
+                      onChange={e => this.setState({ price: e.target.value })}
                     />
                     <select
                       onChange={e => {
