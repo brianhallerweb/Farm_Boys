@@ -23,18 +23,21 @@ export default class QueryContainer extends Component {
     const { query } = this.props;
     return (
       <div className="queryContainer">
-        <input
-          type="text"
-          placeholder="Search Term"
-          onChange={e => this.setState({ search: e.target.value })}
-        />
-        <select onChange={e => this.setState({ type: e.target.value })}>
-          <option>Dairy</option>
-          <option>Produce</option>
-          <option>Meat</option>
-          <option>Dessert</option>
-        </select>
-        <button onClick={() => query(this.buildQuery())}>Submit</button>
+        <div>
+          <input
+            type="text"
+            placeholder="Search Term"
+            onChange={e => this.setState({ search: e.target.value })}
+          />
+          <select onChange={e => this.setState({ type: e.target.value })}>
+            <option>Dairy</option>
+            <option>Produce</option>
+            <option>Protien</option>
+            <option>Dessert</option>
+          </select>
+
+          <button onClick={() => query(this.buildQuery())}>Submit</button>
+        </div>
       </div>
     );
   }
