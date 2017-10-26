@@ -6,6 +6,7 @@ import QueryContainer from "./queryContainer";
 import { Link } from "react-router-dom";
 import ModalContainer from "./modalContainer.js";
 import { read_cookie } from "sfcookies";
+import { NewPostModalContainer } from "./newPostModalContainer";
 
 export default class FrontPageContainer extends Component {
   constructor(props) {
@@ -52,6 +53,7 @@ export default class FrontPageContainer extends Component {
   };
 
   render() {
+    let greeting = "";
     let modalContainer = <div />;
     if (this.state.loginModal) {
       modalContainer = <ModalContainer resetModal={this.resetModal} />;
@@ -75,12 +77,33 @@ export default class FrontPageContainer extends Component {
           </li>
         </ul>
         <div className="frontPageContainer">
+          {greeting}
           <h1>Garden City Market</h1>
-          <h1>{this.state.user.username}</h1>
           <SideNavContainer
             loggedInUser={this.loggedInUser}
             query={this.query}
           />
+          <button onClick={this.clickAddAd}>Make Ad</button>
+          {this.state.adModal ? (
+            <NewPostModalContainer
+              resetModal={this.resetAdModal}
+              updateAds={this.updateAds}
+              {...this.props}
+            />
+          ) : (
+            ""
+          )}
+          <LoginButton
+            resetModal={this.toggleLoginModal}
+            display={this.state.loginModal}
+            fetchUser={this.fetchUser}
+          />
+          <Link
+            onClick={this.clickProfile}
+            to={`/my_profile/${this.state.user && this.state.user._id}`}
+          >
+            <button>My Account</button>
+          </Link>
           <AdContainer ads={this.state.ads} />
         </div>
       </div>
