@@ -16,9 +16,12 @@ export default class SignUpModalContainer extends Component {
       admin: false,
       showModal: true
     };
+    console.log(this.props);
   }
 
   createUser() {
+    let username = this.state.username;
+    let password = this.state.password;
     fetch("/farm_boys/users", {
       method: "post",
       headers: {
@@ -26,9 +29,12 @@ export default class SignUpModalContainer extends Component {
         "Content-Type": "application/json"
       },
       body: JSON.stringify(this.state)
-    }).then(function(response) {
-      return response.json();
-    });
+    })
+      .then(response => response.json())
+      .then(() => {
+        this.props.validateLogin({ username, password });
+        this.setState({ showModal: false });
+      });
   }
 
   render() {

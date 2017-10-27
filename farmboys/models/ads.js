@@ -7,6 +7,7 @@ module.exports = mongoose.model(
   new Schema(
     {
       userId: String,
+      username: String,
       title: String,
       type: String,
       description: Object,

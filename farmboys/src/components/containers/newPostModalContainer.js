@@ -62,6 +62,7 @@ export default class NewPostModalContainer extends Component {
       },
       body: JSON.stringify({
         userId: this.props.user._id,
+        username: this.props.user.username,
         title: this.state.title,
         type: this.state.type,
         price: this.state.price,

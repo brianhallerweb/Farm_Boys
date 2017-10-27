@@ -26,7 +26,7 @@ export default class FrontPageContainer extends Component {
     })
       .then(response => response.json())
       .then(user => {
-        if (user.email) {
+        if (user._id) {
           this.setState({ user: user });
         }
       });
