@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import "../styles/signUpModalContainer.css";
 import "whatwg-fetch";
 import { Button, Modal } from "react-bootstrap";
+import * as EmailValidator from "email-validator";
+
+var phone = require("phone");
 
 export default class SignUpModalContainer extends Component {
   constructor(props) {
@@ -22,18 +25,44 @@ export default class SignUpModalContainer extends Component {
   createUser() {
     let username = this.state.username;
     let password = this.state.password;
-    fetch("/farm_boys/users", {
-      method: "post",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(this.state)
-    })
+    let isValid = true;
+    if (!EmailValidator.validate(this.state.email)) {
+      isValid = false;
+      alert("Invalid email address!");
+    }
+    if (phone(this.state.phonenumber).length > 0) {
+      this.state.phonenumber = phone(this.state.phonenumber)
+        .shift()
+        .concat();
+    } else {
+      isValid = false;
+      alert("Invalid phone number!");
+    }
+    fetch("/farm_boys/users/?username=" + this.state.username)
       .then(response => response.json())
+      .then(user => {
+        if (user) {
+          isValid = false;
+          alert("That username is taken!");
+        }
+      })
       .then(() => {
-        this.props.validateLogin({ username, password });
-        this.setState({ showModal: false });
+        if (isValid) {
+          fetch("/farm_boys/users", {
+            method: "post",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(this.state)
+          })
+            .then(response => response.json())
+            .then(() => {
+              this.props.validateLogin({ username, password });
+              alert("Account creation successful!");
+              this.setState({ showModal: false });
+            });
+        }
       });
   }
 

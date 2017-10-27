@@ -134,42 +134,32 @@ export default class UserProfileContainer extends Component {
       isValid = false;
       alert("Invalid phone number!");
     }
-    fetch("/farm_boys/users/?username=" + this.state.newUsername)
-      .then(response => response.json())
-      .then(user => {
-        if (user && this.state.newUsername !== this.state.username) {
-          isValid = false;
-          alert("That username is taken!");
-        }
+    if (isValid) {
+      if (this.state.newPassword !== "") {
+        this.state.password = this.state.newPassword;
+      }
+      fetch("/farm_boys/users/" + this.state.id, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          username: this.state.newUsername,
+          phonenumber: this.state.phonenumber,
+          password: this.state.password,
+          email: this.state.email
+        })
       })
-      .then(() => {
-        if (isValid) {
-          if (this.state.newPassword !== "") {
-            this.state.password = this.state.newPassword;
-          }
-          fetch("/farm_boys/users/" + this.state.id, {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-              username: this.state.newUsername,
-              phonenumber: this.state.phonenumber,
-              password: this.state.password,
-              email: this.state.email
-            })
-          })
-            .then(response => response.json())
-            .then(() => {
-              alert("Update Successful!");
-              this.setState({
-                oldPassword: "",
-                newPassword: "",
-                confirmPassword: ""
-              });
-            });
-        }
-      });
+        .then(response => response.json())
+        .then(() => {
+          alert("Update Successful!");
+          this.setState({
+            oldPassword: "",
+            newPassword: "",
+            confirmPassword: ""
+          });
+        });
+    }
   };
 
   deleteProfile = () => {
@@ -220,11 +210,7 @@ export default class UserProfileContainer extends Component {
             <Link to="/">Home</Link>
           </div>
           <div>
-            <input
-              onChange={e => this.setState({ newUsername: e.target.value })}
-              type="text"
-              value={this.state.newUsername}
-            />
+            <h2>{this.state.newUsername}</h2>
           </div>
           <div>
             <input
