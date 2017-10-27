@@ -7,6 +7,9 @@ import { Button, Modal } from "react-bootstrap";
 import { convertFromRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import "../styles/react-draft-wysiwyg.css";
+import * as EmailValidator from "email-validator";
+
+var phone = require("phone");
 
 export default class UserProfileContainer extends Component {
   constructor(props) {
@@ -15,8 +18,12 @@ export default class UserProfileContainer extends Component {
       showModal: false,
       id: props.match.params._id,
       username: "",
+      newUsername: "",
       phonenumber: "",
       password: "",
+      oldPassword: "",
+      newPassword: "",
+      confirmPassword: "",
       email: "",
       myAds: [],
       selectedAd: ""
@@ -61,6 +68,7 @@ export default class UserProfileContainer extends Component {
       .then(user =>
         this.setState({
           username: user.username,
+          newUsername: user.username,
           phonenumber: user.phonenumber,
           password: user.password,
           email: user.email
@@ -98,19 +106,60 @@ export default class UserProfileContainer extends Component {
     });
   };
 
+  checkPassword() {
+    if (
+      (this.state.password === this.state.oldPassword &&
+        this.state.newPassword === this.state.confirmPassword) ||
+      (this.state.oldPassword === "" &&
+        this.state.newPassword === "" &&
+        this.state.confirmPassword === "")
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   editProfile = () => {
-    fetch("/farm_boys/users/" + this.state.id, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        username: this.state.username,
-        phonenumber: this.state.phonenumber,
-        password: this.state.password,
-        email: this.state.email
+    let isValid = this.checkPassword();
+    if (!EmailValidator.validate(this.state.email)) {
+      isValid = false;
+      alert("Invalid email address!");
+    }
+    if (phone(this.state.phonenumber).length > 0) {
+      this.state.phonenumber = phone(this.state.phonenumber)
+        .shift()
+        .concat();
+    } else {
+      isValid = false;
+      alert("Invalid phone number!");
+    }
+    if (isValid) {
+      if (this.state.newPassword !== "") {
+        this.state.password = this.state.newPassword;
+      }
+      fetch("/farm_boys/users/" + this.state.id, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          username: this.state.newUsername,
+          phonenumber: this.state.phonenumber,
+          password: this.state.password,
+          email: this.state.email
+        })
       })
-    });
+        .then(response => response.json())
+        .then(() => {
+          alert("Update Successful!");
+          this.setState({
+            oldPassword: "",
+            newPassword: "",
+            confirmPassword: ""
+          });
+        });
+    }
   };
 
   deleteProfile = () => {
@@ -145,17 +194,23 @@ export default class UserProfileContainer extends Component {
   };
 
   render() {
-    console.log(this.state.selectedAd);
     const { contentState } = this.state.selectedAd;
+    let oldPasswordStyle =
+      this.state.oldPassword === this.state.password
+        ? { color: "#000000" }
+        : { color: "#ff0000" };
+    let confirmPasswordStyle =
+      this.state.newPassword === this.state.confirmPassword
+        ? { color: "#000000" }
+        : { color: "#ff0000" };
     return (
       <div>
         <div>
           <div>
-            <input
-              onChange={e => this.setState({ username: e.target.value })}
-              type="text"
-              value={this.state.username}
-            />
+            <Link to="/">Home</Link>
+          </div>
+          <div>
+            <h2>{this.state.newUsername}</h2>
           </div>
           <div>
             <input
@@ -173,16 +228,29 @@ export default class UserProfileContainer extends Component {
           </div>
           <div>
             <input
-              onChange={e => this.setState({ password: e.target.value })}
+              onChange={e => this.setState({ oldPassword: e.target.value })}
               type="password"
-              value={this.state.password}
+              value={this.state.oldPassword}
+              placeholder="Old Password"
+              style={oldPasswordStyle}
             />
           </div>
           <div>
             <input
-              onChange={e => this.setState({ passwordConfirm: e.target.value })}
+              onChange={e => this.setState({ newPassword: e.target.value })}
               type="password"
-              placeholder="Confirm Password"
+              value={this.state.newPassword}
+              placeholder="New Password"
+              style={oldPasswordStyle}
+            />
+          </div>
+          <div>
+            <input
+              onChange={e => this.setState({ confirmPassword: e.target.value })}
+              type="password"
+              value={this.state.confirmPassword}
+              placeholder="Confirm New Password"
+              style={confirmPasswordStyle}
             />
           </div>
           <button onClick={() => this.editProfile()}>Update Account</button>

@@ -15,6 +15,7 @@ export default class AdContainer extends Component {
   }
 
   render() {
+    console.log("props.ads", this.props.ads);
     return (
       <div className="adContainer">
         <ul className="list">

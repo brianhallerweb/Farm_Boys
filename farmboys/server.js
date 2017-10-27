@@ -132,6 +132,23 @@ app.get("/farm_boys/users/:_id", function(req, res) {
 
 app.get("/farm_boys/users", function(req, res) {
   console.log("server.js::" + "run get request");
+  let query = {};
+  if (req.query.username) {
+    query.username = req.query.username;
+  }
+  Users.findOne(query, function(err, result) {
+    if (err) {
+      log("get", false, result);
+      res.status(500).json(err);
+    } else {
+      log("get", true, result);
+      res.json(result);
+    }
+  });
+});
+
+app.get("/farm_boys/users", function(req, res) {
+  console.log("server.js::" + "run get request");
   Users.find(function(err, result) {
     if (err) {
       log("get", false, result);
@@ -201,6 +218,7 @@ app.post("/farm_boys/ads", function(req, res) {
   console.log("server.js::" + "run post request");
   new Ads({
     userId: req.body.userId,
+    username: req.body.username,
     title: req.body.title,
     type: req.body.type,
     description: req.body.contentState,
@@ -219,7 +237,6 @@ app.post("/farm_boys/ads", function(req, res) {
 });
 
 app.get("/farm_boys/ads", function(req, res) {
-  console.log("working?");
   console.log("server.js::" + "run get request");
   let filter = {};
   if (req.query.type) {
@@ -292,7 +309,6 @@ protectedRoute.get("/users/:name", function(req, res) {
 });
 
 protectedRoute.get("/users/:_id", function(req, res) {
-  console.log("working?");
   Users.findOne({ _id: req.params._id }, function(err, result) {
     if (err) {
       log("get", false, result);

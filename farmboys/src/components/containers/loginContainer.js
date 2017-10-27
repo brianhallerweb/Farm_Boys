@@ -15,6 +15,7 @@ export default class LoginContainer extends Component {
       password: "",
       signUpModal: false
     };
+    this.validateLogin = this.validateLogin.bind(this);
   }
 
   validateLogin(input) {
@@ -77,7 +78,11 @@ export default class LoginContainer extends Component {
             <div style={{ margin: "10px" }}>
               <button onClick={() => this.signUpToggle()}>Sign Up!</button>
             </div>
-            {this.state.signUpModal ? <SignUpModalContainer /> : ""}
+            {this.state.signUpModal ? (
+              <SignUpModalContainer validateLogin={this.validateLogin} />
+            ) : (
+              ""
+            )}
           </div>
         </div>
       </div>

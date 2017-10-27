@@ -30,7 +30,7 @@ export default class AdModalContainer extends Component {
                 <h2>{this.props.ad.image}</h2>
               </div>
               <div>
-                <h2>Posted By: {this.props.ad.user}</h2>
+                <h2>Posted By: {this.props.ad.username}</h2>
               </div>
               <div>
                 <h2>Produce type: {this.props.ad.type}</h2>
