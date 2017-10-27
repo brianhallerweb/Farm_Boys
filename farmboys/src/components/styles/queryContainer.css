@@ -1,11 +1,10 @@
 .queryContainer {
-  float: right;
-  background-color: #0bbf1d;
-  width: 90%;
-  height: 50px;
-  margin-left: 20px;
-  margin-right: 20px;
-  margin-bottom: 25px;
-  margin-top: 25px;
+  float: left;
+  background-color: #eaf4eb;
+  width: 80%;
+  height: 4vw;
+  margin: 50px 50px;
   border: solid #000000;
+  padding: 11px;
+  opacity: 0.8;
 }
