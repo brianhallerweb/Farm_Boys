@@ -3,11 +3,11 @@ import "../styles/frontPageContainer.css";
 import SideNavContainer from "./sideNavContainer.js";
 import AdContainer from "./adContainer.js";
 import NewPostModalContainer from "./newPostModalContainer";
-import { Link } from "react-router-dom";
 import LoginButton from "./LoginButton.js";
+import { Link } from "react-router-dom";
 import { read_cookie, delete_cookie } from "sfcookies";
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from "react-bootstrap";
-
+import _ from "lodash";
 export default class FrontPageContainer extends Component {
   constructor(props) {
     super(props);
@@ -27,6 +27,7 @@ export default class FrontPageContainer extends Component {
     })
       .then(response => response.json())
       .then(user => {
+        console.log(this.state.user);
         if (user._id) {
           this.setState({ user: user });
         }
@@ -43,7 +44,7 @@ export default class FrontPageContainer extends Component {
 
   componentDidMount() {
     this.updateAds();
-    this.fetchUser(this);
+    this.fetchUser();
   }
 
   clickProfile = e => {
@@ -124,7 +125,7 @@ export default class FrontPageContainer extends Component {
         )}
         <Link
           onClick={this.clickProfile}
-          to={`/my_profile/${this.state.user && this.state.user._id}`}
+          to={`/my_profile/${_.get(this, "state.user._id")}`}
         >
           <button>My Account</button>
         </Link>

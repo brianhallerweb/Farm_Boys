@@ -203,6 +203,7 @@ export default class UserProfileContainer extends Component {
       this.state.newPassword === this.state.confirmPassword
         ? { color: "#000000" }
         : { color: "#ff0000" };
+    console.log(this.state.id);
     return (
       <div>
         <div>

@@ -47,7 +47,6 @@ protectedRoute.use(function(req, res, next) {
 });
 
 protectedRoute.get("/farm_boys/users", function(req, res) {
-  console.log("server.js::" + "run get request");
   Users.findOne({ username: req.decoded.username }, function(err, result) {
     if (err) {
       log("get", false, result);
