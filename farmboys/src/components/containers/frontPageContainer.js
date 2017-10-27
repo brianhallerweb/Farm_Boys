@@ -6,6 +6,7 @@ import NewPostModalContainer from "./newPostModalContainer";
 import { Link } from "react-router-dom";
 import LoginButton from "./LoginButton.js";
 import { read_cookie, delete_cookie } from "sfcookies";
+import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from "react-bootstrap";
 
 export default class FrontPageContainer extends Component {
   constructor(props) {
