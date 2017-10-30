@@ -12,6 +12,12 @@
 .title {
   grid-area: title;
   justify-self: end;
+  margin-right: 1vw;
+  display: flex;
+}
+
+.title button {
+  margin-left: 10px;
   margin-right: 10px;
 }
 
