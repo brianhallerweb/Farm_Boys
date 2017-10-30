@@ -117,7 +117,6 @@ export default class UserProfileContainer extends Component {
     ) {
       return true;
     } else {
-      alert("Password mismatch!");
       return false;
     }
   }
@@ -212,54 +211,10 @@ export default class UserProfileContainer extends Component {
           <div>
             <div>
               <Link to="/">Home</Link>
-
-              {" "}
-              <div>
-                <input
-                  onChange={e => this.setState({ oldPassword: e.target.value })}
-                  type="password"
-                  value={this.state.oldPassword}
-                  placeholder="Old Password"
-                  style={oldPasswordStyle}
-                />
-              </div>
-              <div>
-                <input
-                  onChange={e => this.setState({ newPassword: e.target.value })}
-                  type="password"
-                  value={this.state.newPassword}
-                  placeholder="New Password"
-                  style={oldPasswordStyle}
-                />
-              </div>
-              <div>
-                <input
-                  onChange={e =>
-                    this.setState({ confirmPassword: e.target.value })}
-                  type="password"
-                  value={this.state.confirmPassword}
-                  placeholder="Confirm New Password"
-                  style={confirmPasswordStyle}
-                />
-              </div>
-              <button
-                onClick={() => {
-                  this.setState({ showPassword: !this.state.showPassword });
-                  this.setState({
-                    oldPassword: "",
-                    newPassword: "",
-                    confirmPassword: ""
-                  });
-                }}
-              >
-                Hide Password
-              </button>
-              <h1 />
             </div>
             <div>
               <h2>{this.state.newUsername}</h2>
             </div>
-
             <div>
               <input
                 onChange={e => this.setState({ email: e.target.value })}
@@ -277,66 +232,6 @@ export default class UserProfileContainer extends Component {
             {this.state.showPassword ? (
               <div>
                 {" "}
-          )}
-          <button onClick={() => this.editProfile()}>Update Account</button>
-          <button
-            onClick={() => {
-              if (
-                window.confirm(
-                  "Are you sure you want to delete's this account?"
-                ) == true
-              ) {
-                this.deleteProfile();
-              }
-            }}
-          >
-            Delete Account
-          </button>
-        </div>
-        <h1>Your Ads</h1>
-        <ul className="list">
-          {this.state.myAds.map(ad => (
-            <li>
-              {ad.title}
-              <button
-                onClick={() =>
-                  this.setState({
-                    showModal: true,
-                    selectedAd: ad
-                  })}
-              >
-                edit
-              </button>
-              <button
-                onClick={() => {
-                  if (
-                    window.confirm(
-                      'Are you sure you want to delete the ad titled "' +
-                        ad.title +
-                        '"?'
-                    ) == true
-                  ) {
-                    this.deleteAd(ad._id);
-                  }
-                }}
-              >
-                delete
-              </button>
-            </li>
-          ))}
-        </ul>
-        <div className="modal">
-          <Modal
-            bsSize="large"
-            show={this.state.showModal}
-            onHide={() => {
-              this.setState({ showModal: false });
-            }}
-          >
-            <Modal.Header closeButton />
-            <Modal.Body>
-              <div className="modalBody">
-
                 <div>
                   <input
                     onChange={e =>
