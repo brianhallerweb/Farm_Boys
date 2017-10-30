@@ -10,3 +10,8 @@
 .list {
   list-style-type: none;
 }
+
+.adList {
+  width: 80%;
+  margin: auto;
+}
