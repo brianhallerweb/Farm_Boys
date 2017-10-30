@@ -13,7 +13,7 @@ module.exports = mongoose.model(
       description: Object,
       image: String,
       price: String,
-      date: Date
+      date: String
     },
     {
       minimize: false
