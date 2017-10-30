@@ -118,6 +118,7 @@ export default class NewPostModalContainer extends Component {
                   </span>
                   <div className="targetAll">
                     <Editor
+                      toolbarOnFocus
                       editorClassName="targetEditor"
                       onContentStateChange={this.onContentStateChange}
                       placeholder={"Begin typing..."}

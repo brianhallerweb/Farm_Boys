@@ -82,18 +82,12 @@ export default class FrontPageContainer extends Component {
   render() {
     let greeting = "";
     if (this.state.user) {
-      greeting = (
-        <h2 style={{ float: "right", margin: "50px", marginLeft: "-50%" }}>
-          Welcome,{" "}
-          <Link to={`/my_profile/${this.state.user && this.state.user._id}`}>
-            {this.state.user.username}
-          </Link>
-        </h2>
-      );
+      greeting = <h5>Welcome, {this.state.user.username}</h5>;
     }
     return (
       <div class="grid">
         <div class="title">
+          {greeting}
           <button onClick={this.clickAddAd}>Make Ad</button>
           {this.state.adModal ? (
             <NewPostModalContainer
