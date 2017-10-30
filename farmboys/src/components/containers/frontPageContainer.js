@@ -6,7 +6,14 @@ import NewPostModalContainer from "./newPostModalContainer";
 import LoginButton from "./LoginButton.js";
 import { Link } from "react-router-dom";
 import { read_cookie, delete_cookie } from "sfcookies";
-import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from "react-bootstrap";
+import {
+  Navbar,
+  Nav,
+  NavItem,
+  NavDropdown,
+  MenuItem,
+  Button
+} from "react-bootstrap";
 import _ from "lodash";
 export default class FrontPageContainer extends Component {
   constructor(props) {
@@ -88,7 +95,7 @@ export default class FrontPageContainer extends Component {
       <div class="grid">
         <div class="title">
           {greeting}
-          <button onClick={this.clickAddAd}>Make Ad</button>
+          <Button onClick={this.clickAddAd}>Make Ad</Button>
           {this.state.adModal ? (
             <NewPostModalContainer
               resetModal={this.resetAdModal}
@@ -100,14 +107,14 @@ export default class FrontPageContainer extends Component {
             ""
           )}
           {this.state.user ? (
-            <button
+            <Button
               onClick={() => {
                 delete_cookie("userKey");
                 this.setState({ user: undefined });
               }}
             >
               Logout
-            </button>
+            </Button>
           ) : (
             <LoginButton
               resetModal={this.toggleLoginModal}
@@ -119,11 +126,10 @@ export default class FrontPageContainer extends Component {
             onClick={this.clickProfile}
             to={`/my_profile/${this.state.user && this.state.user._id}`}
           >
-            <button>My Account</button>
+            <Button>My Account</Button>
           </Link>
         </div>
         <div className="header">
-          {greeting}
           <h1>Garden City Market</h1>
         </div>
         <div className="sidebar">
