@@ -49,9 +49,6 @@ export default class AdModalContainer extends Component {
               <div>
                 <h2>Price: {this.props.ad.price}</h2>
               </div>
-              <div>
-                <h2>Date Posted: {this.props.ad.date}</h2>
-              </div>
             </div>
           </Modal.Body>
           <Modal.Footer>
