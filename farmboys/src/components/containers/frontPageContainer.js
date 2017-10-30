@@ -141,7 +141,7 @@ export default class FrontPageContainer extends Component {
         <div className="adContainer">
           <AdContainer ads={this.state.ads} />
         </div>
-        )}
+
         <Link
           onClick={this.clickProfile}
           to={`/my_profile/${_.get(this, "state.user._id")}`}

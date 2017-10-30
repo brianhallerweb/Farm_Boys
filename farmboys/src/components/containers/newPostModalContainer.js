@@ -82,6 +82,7 @@ export default class NewPostModalContainer extends Component {
     return (
       <div className="modal">
         <Modal
+          bsSize="large"
           show={this.state.showModal}
           onHide={() => {
             this.setState({ showModal: false });
