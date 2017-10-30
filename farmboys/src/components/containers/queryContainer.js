@@ -14,7 +14,11 @@ export default class QueryContainer extends Component {
       typeQuery = "?type=" + this.state.type;
     }
     if (this.state.search !== "") {
-      searchQuery = "&title=" + this.state.search;
+      if (typeQuery === "") {
+        searchQuery = "?title=" + this.state.search;
+      } else {
+        searchQuery = "&title=" + this.state.search;
+      }
     }
     return typeQuery + searchQuery;
   }

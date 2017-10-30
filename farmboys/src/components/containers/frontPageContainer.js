@@ -71,10 +71,10 @@ export default class FrontPageContainer extends Component {
     fetch("/farm_boys/ads/" + queryString)
       .then(response => response.json())
       .then(ads => {
-        if (ads instanceof Array) {
-          this.setState({ ads });
+        if (ads.length === 0) {
+          alert("Your search did not match any results.");
         } else {
-          alert("No search results!");
+          this.setState({ ads });
         }
       });
   };

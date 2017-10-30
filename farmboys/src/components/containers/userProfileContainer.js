@@ -117,6 +117,7 @@ export default class UserProfileContainer extends Component {
     ) {
       return true;
     } else {
+      alert("Password mismatch!");
       return false;
     }
   }
@@ -260,8 +261,14 @@ export default class UserProfileContainer extends Component {
                 />
               </div>
               <button
-                onClick={() =>
-                  this.setState({ showPassword: !this.state.showPassword })}
+                onClick={() => {
+                  this.setState({ showPassword: !this.state.showPassword });
+                  this.setState({
+                    oldPassword: "",
+                    newPassword: "",
+                    confirmPassword: ""
+                  });
+                }}
               >
                 Hide Password
               </button>
@@ -327,6 +334,7 @@ export default class UserProfileContainer extends Component {
         </ul>
         <div className="modal">
           <Modal
+            bsSize="large"
             show={this.state.showModal}
             onHide={() => {
               this.setState({ showModal: false });
