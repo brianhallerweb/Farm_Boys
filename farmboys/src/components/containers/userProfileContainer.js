@@ -20,6 +20,7 @@ export default class UserProfileContainer extends Component {
       username: "",
       newUsername: "",
       phonenumber: "",
+      showPassword: false,
       password: "",
       oldPassword: "",
       newPassword: "",
@@ -203,6 +204,7 @@ export default class UserProfileContainer extends Component {
       this.state.newPassword === this.state.confirmPassword
         ? { color: "#000000" }
         : { color: "#ff0000" };
+    console.log(this.state.id);
     return (
       <div>
         <div>
@@ -226,35 +228,70 @@ export default class UserProfileContainer extends Component {
               value={this.state.phonenumber}
             />
           </div>
-          <div>
-            <input
-              onChange={e => this.setState({ oldPassword: e.target.value })}
-              type="password"
-              value={this.state.oldPassword}
-              placeholder="Old Password"
-              style={oldPasswordStyle}
-            />
-          </div>
-          <div>
-            <input
-              onChange={e => this.setState({ newPassword: e.target.value })}
-              type="password"
-              value={this.state.newPassword}
-              placeholder="New Password"
-              style={oldPasswordStyle}
-            />
-          </div>
-          <div>
-            <input
-              onChange={e => this.setState({ confirmPassword: e.target.value })}
-              type="password"
-              value={this.state.confirmPassword}
-              placeholder="Confirm New Password"
-              style={confirmPasswordStyle}
-            />
-          </div>
+          {this.state.showPassword ? (
+            <div>
+              {" "}
+              <div>
+                <input
+                  onChange={e => this.setState({ oldPassword: e.target.value })}
+                  type="password"
+                  value={this.state.oldPassword}
+                  placeholder="Old Password"
+                  style={oldPasswordStyle}
+                />
+              </div>
+              <div>
+                <input
+                  onChange={e => this.setState({ newPassword: e.target.value })}
+                  type="password"
+                  value={this.state.newPassword}
+                  placeholder="New Password"
+                  style={oldPasswordStyle}
+                />
+              </div>
+              <div>
+                <input
+                  onChange={e =>
+                    this.setState({ confirmPassword: e.target.value })}
+                  type="password"
+                  value={this.state.confirmPassword}
+                  placeholder="Confirm New Password"
+                  style={confirmPasswordStyle}
+                />
+              </div>
+              <button
+                onClick={() =>
+                  this.setState({ showPassword: !this.state.showPassword })}
+              >
+                Hide Password
+              </button>
+              <h1 />
+            </div>
+          ) : (
+            <div>
+              <button
+                onClick={() =>
+                  this.setState({ showPassword: !this.state.showPassword })}
+              >
+                Show Password
+              </button>
+              <h1 />
+            </div>
+          )}
           <button onClick={() => this.editProfile()}>Update Account</button>
-          <button onClick={() => this.deleteProfile()}>Delete Account</button>
+          <button
+            onClick={() => {
+              if (
+                window.confirm(
+                  "Are you sure you want to delete's this account?"
+                ) == true
+              ) {
+                this.deleteProfile();
+              }
+            }}
+          >
+            Delete Account
+          </button>
         </div>
         <h1>Your Ads</h1>
         <ul className="list">
@@ -270,7 +307,21 @@ export default class UserProfileContainer extends Component {
               >
                 edit
               </button>
-              <button onClick={() => this.deleteAd(ad._id)}>delete</button>
+              <button
+                onClick={() => {
+                  if (
+                    window.confirm(
+                      'Are you sure you want to delete the ad titled "' +
+                        ad.title +
+                        '"?'
+                    ) == true
+                  ) {
+                    this.deleteAd(ad._id);
+                  }
+                }}
+              >
+                delete
+              </button>
             </li>
           ))}
         </ul>

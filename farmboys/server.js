@@ -47,7 +47,6 @@ protectedRoute.use(function(req, res, next) {
 });
 
 protectedRoute.get("/farm_boys/users", function(req, res) {
-  console.log("server.js::" + "run get request");
   Users.findOne({ username: req.decoded.username }, function(err, result) {
     if (err) {
       log("get", false, result);
@@ -216,6 +215,7 @@ app.delete("/farm_boys/users/:_id", function(req, res) {
 
 app.post("/farm_boys/ads", function(req, res) {
   console.log("server.js::" + "run post request");
+  let date = new Date();
   new Ads({
     userId: req.body.userId,
     username: req.body.username,
@@ -224,7 +224,7 @@ app.post("/farm_boys/ads", function(req, res) {
     description: req.body.contentState,
     image: req.body.image,
     price: req.body.price,
-    date: Date()
+    date: date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear()
   }).save(function(err, result) {
     if (err) {
       log("post", false, result);
