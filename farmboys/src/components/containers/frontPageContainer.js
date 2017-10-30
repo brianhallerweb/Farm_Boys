@@ -141,7 +141,6 @@ export default class FrontPageContainer extends Component {
         <div className="adContainer">
           <AdContainer ads={this.state.ads} />
         </div>
-        <AdContainer ads={this.state.ads} />
       </div>
     );
   }

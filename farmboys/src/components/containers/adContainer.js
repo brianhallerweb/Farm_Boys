@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import "../styles/adContainer.css";
 import React, { Component } from "react";
 import AdModalContainer from "./adModalContainer";
+import { Table } from "react-bootstrap";
 
 export default class AdContainer extends Component {
   constructor(props) {
@@ -15,23 +16,26 @@ export default class AdContainer extends Component {
   }
 
   render() {
-    console.log("props.ads", this.props.ads);
     return (
-      <div className="adContainer">
-        <ul className="list">
-          {this.props.ads.map(ad => (
-            <li
-              onClick={() =>
-                this.setState({
-                  modal: (
-                    <AdModalContainer resetModal={this.resetModal} ad={ad} />
-                  )
-                })}
-            >
-              {ad.title}
-            </li>
-          ))}
-        </ul>
+      <div className="adList">
+        <Table hover responsive>
+          <tbody>
+            {this.props.ads.map(ad => (
+              <tr
+                onClick={() =>
+                  this.setState({
+                    modal: (
+                      <AdModalContainer resetModal={this.resetModal} ad={ad} />
+                    )
+                  })}
+              >
+                <td>{ad.title}</td>
+                <td>{ad.price}</td>
+                <td>{ad.date}</td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
         {this.state.modal}
       </div>
     );
