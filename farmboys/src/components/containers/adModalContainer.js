@@ -14,6 +14,7 @@ export default class AdModalContainer extends Component {
     return (
       <div className="modal">
         <Modal
+          dialogClassName="adModal"
           show={this.state.showModal}
           onHide={() => {
             this.setState({ showModal: false });

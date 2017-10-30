@@ -1,13 +1,8 @@
 .sideNavContainer {
-  justify-content: center;
   align-items: center;
   display: inline-block;
   text-align: center;
-  float: left;
   background-image: url("./img/missoulaMarket.jpg");
   background-size: 100% 100%;
-  width: 30%;
-  height: 15vw;
-  margin: 40px 10px;
   border: solid #000000;
 }

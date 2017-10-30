@@ -91,44 +91,58 @@ export default class FrontPageContainer extends Component {
       );
     }
     return (
-      <div className="frontPageContainer">
-        {greeting}
-        <h1>Garden City Market</h1>
-        <SideNavContainer loggedInUser={this.loggedInUser} query={this.query} />
-        <button onClick={this.clickAddAd}>Make Ad</button>
-        {this.state.adModal ? (
-          <NewPostModalContainer
-            resetModal={this.resetAdModal}
-            updateAds={this.updateAds}
-            user={this.state.user}
-            {...this.props}
-          />
-        ) : (
-          ""
-        )}
-        {this.state.user ? (
-          <button
-            onClick={() => {
-              delete_cookie("userKey");
-              this.setState({ user: undefined });
-            }}
+      <div class="grid">
+        <div class="title">
+          <button onClick={this.clickAddAd}>Make Ad</button>
+          {this.state.adModal ? (
+            <NewPostModalContainer
+              resetModal={this.resetAdModal}
+              updateAds={this.updateAds}
+              user={this.state.user}
+              {...this.props}
+            />
+          ) : (
+            ""
+          )}
+          {this.state.user ? (
+            <button
+              onClick={() => {
+                delete_cookie("userKey");
+                this.setState({ user: undefined });
+              }}
+            >
+              Logout
+            </button>
+          ) : (
+            <LoginButton
+              resetModal={this.toggleLoginModal}
+              display={this.state.loginModal}
+              fetchUser={this.fetchUser}
+            />
+          )}
+          <Link
+            onClick={this.clickProfile}
+            to={`/my_profile/${this.state.user && this.state.user._id}`}
           >
-            Logout
-          </button>
-        ) : (
-          <LoginButton
-            resetModal={this.toggleLoginModal}
-            display={this.state.loginModal}
-            fetchUser={this.fetchUser}
+            <button>My Account</button>
+          </Link>
+        </div>
+
+        <div className="header">
+          {greeting}
+          <h1>Garden City Market</h1>
+        </div>
+
+        <div className="sidebar">
+          <SideNavContainer
+            loggedInUser={this.loggedInUser}
+            query={this.query}
           />
-        )}
-        <Link
-          onClick={this.clickProfile}
-          to={`/my_profile/${this.state.user && this.state.user._id}`}
-        >
-          <button>My Account</button>
-        </Link>
-        <AdContainer ads={this.state.ads} />
+        </div>
+
+        <div className="adContainer">
+          <AdContainer ads={this.state.ads} />
+        </div>
       </div>
     );
   }

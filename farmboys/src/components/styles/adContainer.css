@@ -1,14 +1,10 @@
 .adContainer {
   text-align: center;
-  justify-content: center;
   align-items: center;
-  float: right;
-  display: flex;
   background-color: #d2d9d2;
-  width: 65vw;
+  width: 75vw;
   height: auto;
-  margin: 15px 10px;
-  border: solid #000000;
+  cursor: pointer;
 }
 
 .list {
