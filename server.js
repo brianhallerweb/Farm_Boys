@@ -6,7 +6,7 @@ var Users = require("./models/users");
 var Ads = require("./models/ads");
 var jwt = require("jsonwebtoken");
 var config = require("./config.js");
-mongoose.connect(config.db);
+mongoose.connect(config.database);
 var app = express();
 //app.use(express.static("public"));
 app.use(bodyParser.json());
