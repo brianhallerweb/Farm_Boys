@@ -206,214 +206,221 @@ export default class UserProfileContainer extends Component {
         : { color: "#ff0000" };
     console.log(this.state.id);
     return (
-      <div class="grid">
-        <div class="user">
-          <div>
+      <div>
+        <div class="gridProfile">
+          <div class="user">
             <div>
-              <Link to="/">Home</Link>
-            </div>
-            <div>
-              <h2>{this.state.newUsername}</h2>
-            </div>
-            <div>
-              <input
-                onChange={e => this.setState({ email: e.target.value })}
-                type="text"
-                value={this.state.email}
-              />
-            </div>
-            <div>
-              <input
-                onChange={e => this.setState({ phonenumber: e.target.value })}
-                type="text"
-                value={this.state.phonenumber}
-              />
-            </div>
-            {this.state.showPassword ? (
               <div>
-                {" "}
-                <div>
-                  <input
-                    onChange={e =>
-                      this.setState({ oldPassword: e.target.value })}
-                    type="password"
-                    value={this.state.oldPassword}
-                    placeholder="Old Password"
-                    style={oldPasswordStyle}
-                  />
-                </div>
-                <div>
-                  <input
-                    onChange={e =>
-                      this.setState({ newPassword: e.target.value })}
-                    type="password"
-                    value={this.state.newPassword}
-                    placeholder="New Password"
-                    style={oldPasswordStyle}
-                  />
-                </div>
-                <div>
-                  <input
-                    onChange={e =>
-                      this.setState({ confirmPassword: e.target.value })}
-                    type="password"
-                    value={this.state.confirmPassword}
-                    placeholder="Confirm New Password"
-                    style={confirmPasswordStyle}
-                  />
-                </div>
-                <button
-                  onClick={() =>
-                    this.setState({ showPassword: !this.state.showPassword })}
-                >
-                  Hide Password
-                </button>
-                <h1 />
+                <Link to="/">Home</Link>
               </div>
-            ) : (
               <div>
-                <button
-                  onClick={() =>
-                    this.setState({ showPassword: !this.state.showPassword })}
-                >
-                  Show Password
-                </button>
-                <h1 />
+                <h2>{this.state.newUsername}</h2>
               </div>
-            )}
-            <button onClick={() => this.editProfile()}>Update Account</button>
-            <button
-              onClick={() => {
-                if (
-                  window.confirm(
-                    "Are you sure you want to delete's this account?"
-                  ) == true
-                ) {
-                  this.deleteProfile();
-                }
-              }}
-            >
-              Delete Account
-            </button>
-          </div>
-          <h1>Your Ads</h1>
-          <ul className="list">
-            {this.state.myAds.map(ad => (
-              <li>
-                {ad.title}
-                <button
-                  onClick={() =>
-                    this.setState({
-                      showModal: true,
-                      selectedAd: ad
-                    })}
-                >
-                  edit
-                </button>
-                <button
-                  onClick={() => {
-                    if (
-                      window.confirm(
-                        'Are you sure you want to delete the ad titled "' +
-                          ad.title +
-                          '"?'
-                      ) == true
-                    ) {
-                      this.deleteAd(ad._id);
-                    }
-                  }}
-                >
-                  delete
-                </button>
-              </li>
-            ))}
-          </ul>
-          <div className="modal">
-            <Modal
-              bsSize="large"
-              show={this.state.showModal}
-              onHide={() => {
-                this.setState({ showModal: false });
-              }}
-            >
-              <Modal.Header closeButton />
-              <Modal.Body>
-                <div className="modalBody">
+              <div>
+                <input
+                  onChange={e => this.setState({ email: e.target.value })}
+                  type="text"
+                  value={this.state.email}
+                />
+              </div>
+              <div>
+                <input
+                  onChange={e => this.setState({ phonenumber: e.target.value })}
+                  type="text"
+                  value={this.state.phonenumber}
+                />
+              </div>
+              {this.state.showPassword ? (
+                <div>
+                  {" "}
                   <div>
-                    <div className="content">
-                      <span>
-                        <h1>Edit your Ad</h1>
-                        <input
-                          type="text"
-                          defaultValue={this.state.selectedAd.title}
-                          onChange={e =>
-                            this.setState({ title: e.target.value })}
-                        />
-                        <input
-                          type="text"
-                          defaultValue={this.state.selectedAd.price}
-                          onChange={e =>
-                            this.setState({ price: e.target.value })}
-                        />
-                        <select
-                          autofocus={this.state.selectedAd.type}
-                          onChange={e => {
-                            this.setState({
-                              type: e.target.value
-                            });
-                          }}
-                        >
-                          {this.setType(this.state.selectedAd.type || "meat")}
-                        </select>
-                      </span>
-                      <div className="targetAll">
-                        {this.state.selectedAd.description ? (
-                          <Editor
-                            initialContentState={
-                              this.state.selectedAd.description
-                            }
-                            editorClassName="targetEditor"
-                            onContentStateChange={this.onContentStateChange}
-                            placeholder={"Begin typing..."}
-                            spellCheck={true}
-                            toolbar={{
-                              options: [
-                                "inline",
-                                "blockType",
-                                "fontSize",
-                                "fontFamily",
-                                "list",
-                                "textAlign",
-                                "colorPicker"
-                              ],
-                              inline: { inDropdown: true },
-                              list: { inDropdown: true },
-                              textAlign: { inDropdown: true }
-                            }}
-                          />
-                        ) : (
-                          ""
-                        )}
-                      </div>
-                      <button
-                        onClick={() => this.editAd(this.state.selectedAd._id)}
-                      >
-                        Update Ad
-                      </button>
-                    </div>
+                    <input
+                      onChange={e =>
+                        this.setState({ oldPassword: e.target.value })}
+                      type="password"
+                      value={this.state.oldPassword}
+                      placeholder="Old Password"
+                      style={oldPasswordStyle}
+                    />
                   </div>
+                  <div>
+                    <input
+                      onChange={e =>
+                        this.setState({ newPassword: e.target.value })}
+                      type="password"
+                      value={this.state.newPassword}
+                      placeholder="New Password"
+                      style={oldPasswordStyle}
+                    />
+                  </div>
+                  <div>
+                    <input
+                      onChange={e =>
+                        this.setState({ confirmPassword: e.target.value })}
+                      type="password"
+                      value={this.state.confirmPassword}
+                      placeholder="Confirm New Password"
+                      style={confirmPasswordStyle}
+                    />
+                  </div>
+                  <button
+                    onClick={() =>
+                      this.setState({ showPassword: !this.state.showPassword })}
+                  >
+                    Hide Password
+                  </button>
+                  <h1 />
                 </div>
-              </Modal.Body>
-              <Modal.Footer>
-                <Button
-                  onClick={() => {
+              ) : (
+                <div>
+                  <button
+                    onClick={() =>
+                      this.setState({ showPassword: !this.state.showPassword })}
+                  >
+                    Show Password
+                  </button>
+                  <h1 />
+                </div>
+              )}
+              <button onClick={() => this.editProfile()}>Update Account</button>
+              <button
+                onClick={() => {
+                  if (
+                    window.confirm(
+                      "Are you sure you want to delete's this account?"
+                    ) == true
+                  ) {
+                    this.deleteProfile();
+                  }
+                }}
+              >
+                Delete Account
+              </button>
+            </div>
+            <div className="ads">
+              <h1>Your Ads</h1>
+              <ul className="list">
+                {this.state.myAds.map(ad => (
+                  <li>
+                    {ad.title}
+                    <button
+                      onClick={() =>
+                        this.setState({
+                          showModal: true,
+                          selectedAd: ad
+                        })}
+                    >
+                      edit
+                    </button>
+                    <button
+                      onClick={() => {
+                        if (
+                          window.confirm(
+                            'Are you sure you want to delete the ad titled "' +
+                              ad.title +
+                              '"?'
+                          ) == true
+                        ) {
+                          this.deleteAd(ad._id);
+                        }
+                      }}
+                    >
+                      delete
+                    </button>
+                  </li>
+                ))}
+              </ul>
+              <div className="modal">
+                <Modal
+                  bsSize="large"
+                  show={this.state.showModal}
+                  onHide={() => {
                     this.setState({ showModal: false });
                   }}
                 >
-                  Close
-                </Button>
-              </Modal.Footer>
-            </Modal>
+                  <Modal.Header closeButton />
+                  <Modal.Body>
+                    <div className="modalBody">
+                      <div>
+                        <div className="content">
+                          <span>
+                            <h1>Edit your Ad</h1>
+                            <input
+                              type="text"
+                              defaultValue={this.state.selectedAd.title}
+                              onChange={e =>
+                                this.setState({ title: e.target.value })}
+                            />
+                            <input
+                              type="text"
+                              defaultValue={this.state.selectedAd.price}
+                              onChange={e =>
+                                this.setState({ price: e.target.value })}
+                            />
+                            <select
+                              autofocus={this.state.selectedAd.type}
+                              onChange={e => {
+                                this.setState({
+                                  type: e.target.value
+                                });
+                              }}
+                            >
+                              {this.setType(
+                                this.state.selectedAd.type || "meat"
+                              )}
+                            </select>
+                          </span>
+                          <div className="targetAll">
+                            {this.state.selectedAd.description ? (
+                              <Editor
+                                initialContentState={
+                                  this.state.selectedAd.description
+                                }
+                                editorClassName="targetEditor"
+                                onContentStateChange={this.onContentStateChange}
+                                placeholder={"Begin typing..."}
+                                spellCheck={true}
+                                toolbar={{
+                                  options: [
+                                    "inline",
+                                    "blockType",
+                                    "fontSize",
+                                    "fontFamily",
+                                    "list",
+                                    "textAlign",
+                                    "colorPicker"
+                                  ],
+                                  inline: { inDropdown: true },
+                                  list: { inDropdown: true },
+                                  textAlign: { inDropdown: true }
+                                }}
+                              />
+                            ) : (
+                              ""
+                            )}
+                          </div>
+                          <button
+                            onClick={() =>
+                              this.editAd(this.state.selectedAd._id)}
+                          >
+                            Update Ad
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button
+                      onClick={() => {
+                        this.setState({ showModal: false });
+                      }}
+                    >
+                      Close
+                    </Button>
+                  </Modal.Footer>
+                </Modal>
+              </div>
+            </div>
           </div>
         </div>
       </div>
