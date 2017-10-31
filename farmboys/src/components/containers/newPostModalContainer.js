@@ -139,9 +139,7 @@ export default class NewPostModalContainer extends Component {
                       }}
                     />
                   </div>
-                  <button onClick={() => this.createAd()}>
-                    Save recipe to database
-                  </button>
+                  <button onClick={() => this.createAd()}>Post New Ad</button>
                 </div>
               </div>
             </div>

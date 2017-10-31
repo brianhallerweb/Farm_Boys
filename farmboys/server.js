@@ -104,7 +104,6 @@ app.post("/authenticate", function(req, res) {
 });
 
 app.get("/farm_boys/ads/:_id", function(req, res) {
-  console.log("server.js::" + "run get request");
   Ads.findOne({ _id: req.params._id }, function(err, result) {
     if (err) {
       log("get", false, result);
@@ -117,7 +116,6 @@ app.get("/farm_boys/ads/:_id", function(req, res) {
 });
 
 app.get("/farm_boys/users/:_id", function(req, res) {
-  console.log("server.js::" + "run get request");
   Users.findOne({ _id: req.params._id }, function(err, result) {
     if (err) {
       log("get", false, result);
@@ -130,7 +128,6 @@ app.get("/farm_boys/users/:_id", function(req, res) {
 });
 
 app.get("/farm_boys/users", function(req, res) {
-  console.log("server.js::" + "run get request");
   let query = {};
   if (req.query.username) {
     query.username = req.query.username;
@@ -147,7 +144,6 @@ app.get("/farm_boys/users", function(req, res) {
 });
 
 app.get("/farm_boys/users", function(req, res) {
-  console.log("server.js::" + "run get request");
   Users.find(function(err, result) {
     if (err) {
       log("get", false, result);
@@ -160,8 +156,6 @@ app.get("/farm_boys/users", function(req, res) {
 });
 
 app.post("/farm_boys/users", function(req, res) {
-  console.log("server.js::" + "run post request");
-  console.log("req.body", req.body);
   new Users({
     username: req.body.username,
     phonenumber: req.body.phonenumber,
@@ -180,7 +174,6 @@ app.post("/farm_boys/users", function(req, res) {
 });
 
 app.put("/farm_boys/users/:_id", function(req, res) {
-  console.log("server.js::", req.body);
   Users.findByIdAndUpdate(
     { _id: req.params._id },
     {
@@ -201,7 +194,6 @@ app.put("/farm_boys/users/:_id", function(req, res) {
 });
 
 app.delete("/farm_boys/users/:_id", function(req, res) {
-  console.log("server.js::" + "run delete request");
   Users.remove({ _id: req.params._id }, function(err, result) {
     if (err) {
       log("delete", false, result);
@@ -214,7 +206,6 @@ app.delete("/farm_boys/users/:_id", function(req, res) {
 });
 
 app.post("/farm_boys/ads", function(req, res) {
-  console.log("server.js::" + "run post request");
   let date = new Date();
   new Ads({
     userId: req.body.userId,
@@ -237,7 +228,6 @@ app.post("/farm_boys/ads", function(req, res) {
 });
 
 app.get("/farm_boys/ads", function(req, res) {
-  console.log("server.js::" + "run get request");
   let filter = {};
   if (req.query.type) {
     filter.type = req.query.type;
@@ -263,7 +253,6 @@ app.get("/farm_boys/ads", function(req, res) {
 });
 
 app.put("/farm_boys/ads/:_id", function(req, res) {
-  console.log("server.js::", req.body);
   Ads.findByIdAndUpdate(
     { _id: req.params._id },
     {
@@ -284,7 +273,6 @@ app.put("/farm_boys/ads/:_id", function(req, res) {
 });
 
 app.delete("/farm_boys/ads/:_id", function(req, res) {
-  console.log("server.js::" + "run delete request");
   Ads.remove({ _id: req.params._id }, function(err, result) {
     if (err) {
       log("delete", false, result);
