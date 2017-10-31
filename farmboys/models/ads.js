@@ -14,10 +14,21 @@ module.exports = mongoose.model(
       image: String,
       price: Number,
       contact: String,
-      date: String
+      date: String,
+      searchText: String
     },
     {
       minimize: false
     }
   )
 );
+
+schema.index({ title: "text", searchText: "text" });
+
+schema.pre("save", function(next) {
+  this.searchText = this.description.blocks.map(block => block.text).join(" ");
+  next();
+});
+
+// set up a mongoose model and pass it using module.exports
+module.exports = mongoose.model("Ads", schema);

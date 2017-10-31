@@ -20,11 +20,7 @@ var protectedRoute = express.Router();
 app.use("/api", protectedRoute);
 
 protectedRoute.use(function(req, res, next) {
-  var token =
-    req.body.token ||
-    req.query.token ||
-    req.headers["x-access-token"] ||
-    req.headers["authorization"];
+  var token = req.headers["authorization"];
 
   if (token) {
     jwt.verify(token, app.get("key"), function(err, decoded) {
@@ -233,23 +229,32 @@ app.get("/farm_boys/ads", function(req, res) {
     filter.type = req.query.type;
   }
   if (req.query.title) {
-    filter.title = req.query.title;
+    filter.$or = [
+      {
+        title: new RegExp(req.query.title, "i")
+      },
+      {
+        searchText: new RegExp(req.query.title, "i")
+      }
+    ];
   }
   if (req.query.id) {
     filter.userId = req.query.id;
   }
-  Ads.find(filter, function(err, result) {
-    if (err) {
-      log("get", false, result);
-      res.status(500).json(err);
-    } else {
-      log("get", true, result);
-      res.json(result);
-    }
-  })
+  console.log("serach query", filter);
+  Ads.find(filter)
     .skip(parseInt(0))
     .sort("-date")
-    .limit(parseInt(10));
+    .limit(parseInt(10))
+    .exec(function(err, result) {
+      if (err) {
+        log("get", false, result);
+        res.status(500).json(err);
+      } else {
+        log("get", true, result);
+        res.json(result);
+      }
+    });
 });
 
 app.put("/farm_boys/ads/:_id", function(req, res) {
