@@ -102,8 +102,8 @@ export default class NewPostModalContainer extends Component {
                       onChange={e => this.setState({ title: e.target.value })}
                     />
                     <input
-                      type="text"
-                      placeholder="Price"
+                      type="number"
+                      placholder="$"
                       onChange={e => this.setState({ price: e.target.value })}
                     />
                     <select

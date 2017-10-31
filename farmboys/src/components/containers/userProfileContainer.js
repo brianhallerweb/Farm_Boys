@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "../styles/userProfileContainer.css";
 import "whatwg-fetch";
 import { read_cookie, delete_cookie } from "sfcookies";
-import { Button, Modal } from "react-bootstrap";
+import { Button, Modal, Table } from "react-bootstrap";
 import { convertFromRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import "../styles/react-draft-wysiwyg.css";
@@ -204,132 +204,167 @@ export default class UserProfileContainer extends Component {
       this.state.newPassword === this.state.confirmPassword
         ? { color: "#000000" }
         : { color: "#ff0000" };
-    console.log(this.state.id);
+
     return (
       <div>
-        <div class="gridProfile">
-          <div class="user">
+        <div className="gridProfile">
+          <div className="user">
             <div>
-              <div>
-                <Link to="/">Home</Link>
-              </div>
-              <div>
-                <h2>{this.state.newUsername}</h2>
-              </div>
-              <div>
-                <input
-                  onChange={e => this.setState({ email: e.target.value })}
-                  type="text"
-                  value={this.state.email}
-                />
-              </div>
-              <div>
-                <input
-                  onChange={e => this.setState({ phonenumber: e.target.value })}
-                  type="text"
-                  value={this.state.phonenumber}
-                />
-              </div>
-              {this.state.showPassword ? (
-                <div>
-                  {" "}
-                  <div>
-                    <input
-                      onChange={e =>
-                        this.setState({ oldPassword: e.target.value })}
-                      type="password"
-                      value={this.state.oldPassword}
-                      placeholder="Old Password"
-                      style={oldPasswordStyle}
-                    />
-                  </div>
-                  <div>
-                    <input
-                      onChange={e =>
-                        this.setState({ newPassword: e.target.value })}
-                      type="password"
-                      value={this.state.newPassword}
-                      placeholder="New Password"
-                      style={oldPasswordStyle}
-                    />
-                  </div>
-                  <div>
-                    <input
-                      onChange={e =>
-                        this.setState({ confirmPassword: e.target.value })}
-                      type="password"
-                      value={this.state.confirmPassword}
-                      placeholder="Confirm New Password"
-                      style={confirmPasswordStyle}
-                    />
-                  </div>
-                  <button
-                    onClick={() =>
-                      this.setState({ showPassword: !this.state.showPassword })}
-                  >
-                    Hide Password
-                  </button>
-                  <h1 />
-                </div>
-              ) : (
-                <div>
-                  <button
-                    onClick={() =>
-                      this.setState({ showPassword: !this.state.showPassword })}
-                  >
-                    Show Password
-                  </button>
-                  <h1 />
-                </div>
-              )}
-              <button onClick={() => this.editProfile()}>Update Account</button>
-              <button
-                onClick={() => {
-                  if (
-                    window.confirm(
-                      "Are you sure you want to delete's this account?"
-                    ) == true
-                  ) {
-                    this.deleteProfile();
-                  }
-                }}
-              >
-                Delete Account
-              </button>
+              <Link to="/">Home</Link>
             </div>
-            <div className="ads">
-              <h1>Your Ads</h1>
-              <ul className="list">
-                {this.state.myAds.map(ad => (
-                  <li>
-                    {ad.title}
+            <div className="userInfo">
+              <div>
+                <div>
+                  <h2>{this.state.newUsername}</h2>
+                </div>
+                <div>
+                  <input
+                    onChange={e => this.setState({ email: e.target.value })}
+                    type="text"
+                    value={this.state.email}
+                  />
+                </div>
+                <div>
+                  <input
+                    onChange={e =>
+                      this.setState({ phonenumber: e.target.value })}
+                    type="text"
+                    value={this.state.phonenumber}
+                  />
+                </div>
+                {this.state.showPassword ? (
+                  <div>
+                    {" "}
+                    <div>
+                      <input
+                        onChange={e =>
+                          this.setState({ oldPassword: e.target.value })}
+                        type="password"
+                        value={this.state.oldPassword}
+                        placeholder="Old Password"
+                        style={oldPasswordStyle}
+                      />
+                    </div>
+                    <div>
+                      <input
+                        onChange={e =>
+                          this.setState({ newPassword: e.target.value })}
+                        type="password"
+                        value={this.state.newPassword}
+                        placeholder="New Password"
+                        style={oldPasswordStyle}
+                      />
+                    </div>
+                    <div>
+                      <input
+                        onChange={e =>
+                          this.setState({ confirmPassword: e.target.value })}
+                        type="password"
+                        value={this.state.confirmPassword}
+                        placeholder="Confirm New Password"
+                        style={confirmPasswordStyle}
+                      />
+                    </div>
                     <button
                       onClick={() =>
                         this.setState({
-                          showModal: true,
-                          selectedAd: ad
+                          showPassword: !this.state.showPassword
                         })}
                     >
-                      edit
+                      Hide Password
                     </button>
+                    <h1 />
+                  </div>
+                ) : (
+                  <div>
                     <button
-                      onClick={() => {
-                        if (
-                          window.confirm(
-                            'Are you sure you want to delete the ad titled "' +
-                              ad.title +
-                              '"?'
-                          ) == true
-                        ) {
-                          this.deleteAd(ad._id);
-                        }
-                      }}
+                      onClick={() =>
+                        this.setState({
+                          showPassword: !this.state.showPassword
+                        })}
                     >
-                      delete
+                      Change Password
                     </button>
-                  </li>
-                ))}
-              </ul>
+                    <h1 />
+                  </div>
+                )}
+                <Button
+                  bsStyle="info"
+                  bsSize="xs"
+                  onClick={() => this.editProfile()}
+                >
+                  Update Account
+                </Button>
+                <Button
+                  bsStyle="danger"
+                  bsSize="xs"
+                  onClick={() => {
+                    if (
+                      window.confirm(
+                        "Are you sure you want to delete's this account?"
+                      ) == true
+                    ) {
+                      this.deleteProfile();
+                    }
+                  }}
+                >
+                  Delete Account
+                </Button>
+              </div>
+            </div>
+            <hr />
+            <div className="ads">
+              <h3>Your Ads</h3>
+              <Table hover responsive bordered condensed>
+                <tbody>
+                  {this.state.myAds.map(ad => (
+                    <tr>
+                      <td
+                        onClick={() =>
+                          this.setState({
+                            showModal: true,
+                            selectedAd: ad
+                          })}
+                      >
+                        {ad.title}
+                      </td>
+                      <td>
+                        <Button
+                          bsStyle="info"
+                          bsSize="xs"
+                          onClick={() =>
+                            this.setState({
+                              showModal: true,
+                              selectedAd: ad
+                            })}
+                        >
+                          edit
+                        </Button>
+                      </td>
+                      <td>
+                        <Button
+                          bsStyle="danger"
+                          bsSize="xs"
+                          onClick={() => {
+                            if (
+                              window.confirm(
+                                'Are you sure you want to delete the ad titled "' +
+                                  ad.title +
+                                  '"?'
+                              ) == true
+                            ) {
+                              this.deleteAd(ad._id);
+                            }
+                          }}
+                        >
+                          delete
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+
               <div className="modal">
                 <Modal
                   bsSize="large"
