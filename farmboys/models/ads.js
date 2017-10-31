@@ -13,6 +13,7 @@ module.exports = mongoose.model(
       description: Object,
       image: String,
       price: Number,
+      contact: String,
       date: String
     },
     {

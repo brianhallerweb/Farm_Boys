@@ -19,16 +19,7 @@
   padding: 6px;
 }
 
-/*Beginning of Brian's special css*/
-.targetAll {
-  height: 400px;
-  width: 600px;
-  padding-left: 5px;
-}
 .targetEditor {
-  height: 300px;
-  max-height: 300px;
-  border: 1px solid #000000;
+  border: 1px solid #696969;
   background-color: #fff;
 }
-/*End of Brian's special css*/

@@ -5,7 +5,13 @@ import "whatwg-fetch";
 import { convertFromRaw, convertToRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import "../styles/react-draft-wysiwyg.css";
-import { Button, Modal } from "react-bootstrap";
+import {
+  Button,
+  Modal,
+  FormGroup,
+  FormControl,
+  ControlLabel
+} from "react-bootstrap";
 
 const content = {
   entityMap: {},
@@ -22,7 +28,7 @@ const content = {
   ]
 };
 
-export default class NewPostModalContainer extends Component {
+export default class briansCreateNewAd extends Component {
   constructor(props) {
     super(props);
     const contentState = convertFromRaw(content);
@@ -32,20 +38,10 @@ export default class NewPostModalContainer extends Component {
       title: "",
       type: "",
       price: "",
+      contact: "",
       contentState
     };
   }
-
-  types = [
-    <option selected disabled hidden>
-      Choose Type
-    </option>,
-    <option>Meat</option>,
-    <option>Dairy</option>,
-    <option>Dessert</option>,
-    <option>Produce</option>,
-    <option>Other</option>
-  ];
 
   onContentStateChange: Function = contentState => {
     this.setState({
@@ -82,7 +78,6 @@ export default class NewPostModalContainer extends Component {
     return (
       <div className="modal">
         <Modal
-          bsSize="large"
           show={this.state.showModal}
           onHide={() => {
             this.setState({ showModal: false });
@@ -91,58 +86,86 @@ export default class NewPostModalContainer extends Component {
         >
           <Modal.Header closeButton />
           <Modal.Body>
-            <div className="modalBody">
-              <div>
-                <div className="content">
-                  <span>
-                    <h1>Make an Ad</h1>
-                    <input
-                      type="text"
-                      placeholder="Title"
-                      onChange={e => this.setState({ title: e.target.value })}
-                    />
-                    <input
-                      type="number"
-                      placholder="$"
-                      onChange={e => this.setState({ price: e.target.value })}
-                    />
-                    <select
-                      onChange={e => {
-                        this.setState({
-                          type: e.target.value
-                        });
-                      }}
-                    >
-                      {this.types}
-                    </select>
-                  </span>
-                  <div className="targetAll">
-                    <Editor
-                      toolbarOnFocus
-                      editorClassName="targetEditor"
-                      onContentStateChange={this.onContentStateChange}
-                      placeholder={"Begin typing..."}
-                      spellCheck={true}
-                      toolbar={{
-                        options: [
-                          "inline",
-                          "blockType",
-                          "fontSize",
-                          "fontFamily",
-                          "list",
-                          "textAlign",
-                          "colorPicker"
-                        ],
-                        inline: { inDropdown: true },
-                        list: { inDropdown: true },
-                        textAlign: { inDropdown: true }
-                      }}
-                    />
-                  </div>
-                  <button onClick={() => this.createAd()}>Post New Ad</button>
+            <form>
+              <FormGroup>
+                <ControlLabel>Title</ControlLabel>
+                <FormControl
+                  type="text"
+                  placeholder="Enter title"
+                  onChange={e => this.setState({ title: e.target.value })}
+                />
+              </FormGroup>
+              <FormGroup>
+                <ControlLabel>Price</ControlLabel>
+                <FormControl
+                  type="number"
+                  placeholder="Enter price in dollars"
+                  onChange={e => this.setState({ price: e.target.value })}
+                />
+              </FormGroup>
+
+              <FormGroup controlId="formControlsSelect">
+                <ControlLabel>Food Type</ControlLabel>
+                <FormControl
+                  componentClass="select"
+                  placeholder="Select"
+                  onChange={e => {
+                    this.setState({
+                      type: e.target.value
+                    });
+                  }}
+                >
+                  <option>Meat</option>,
+                  <option>Dairy</option>,
+                  <option>Dessert</option>,
+                  <option>Produce</option>,
+                  <option>Other</option>
+                </FormControl>
+              </FormGroup>
+
+              <FormGroup controlId="formControlsTextarea">
+                <ControlLabel>Description</ControlLabel>
+                <div className="targetAll">
+                  <Editor
+                    editorClassName="targetEditor"
+                    onContentStateChange={this.onContentStateChange}
+                    placeholder={"Begin typing..."}
+                    spellCheck={true}
+                    toolbar={{
+                      options: [
+                        "inline",
+                        "blockType",
+                        "fontSize",
+                        "fontFamily",
+                        "list",
+                        "textAlign",
+                        "colorPicker"
+                      ],
+                      inline: { inDropdown: true },
+                      list: { inDropdown: true },
+                      textAlign: { inDropdown: true }
+                    }}
+                  />
                 </div>
-              </div>
-            </div>
+              </FormGroup>
+
+              <FormGroup>
+                <ControlLabel>Contact</ControlLabel>
+                <FormControl
+                  type="text"
+                  placeholder="Enter your preferred contact information"
+                  onChange={e => this.setState({ contact: e.target.value })}
+                />
+              </FormGroup>
+
+              <Button
+                bsStyle="primary"
+                type="submit"
+                onClick={() => this.createAd()}
+              >
+                Post New Ad
+              </Button>
+            </form>
           </Modal.Body>
           <Modal.Footer>
             <Button
