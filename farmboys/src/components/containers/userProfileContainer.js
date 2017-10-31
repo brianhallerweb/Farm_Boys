@@ -330,6 +330,7 @@ export default class UserProfileContainer extends Component {
           </ul>
           <div className="modal">
             <Modal
+              bsSize="large"
               show={this.state.showModal}
               onHide={() => {
                 this.setState({ showModal: false });
