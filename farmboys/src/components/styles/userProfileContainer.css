@@ -11,6 +11,15 @@
 .user {
   border: solid #000000;
   margin: 0 auto;
-  text-align: center;
-  width: 600px;
+  width: 50%;
+}
+
+.userInfo {
+  width: 90%;
+  margin: auto;
+}
+
+.ads {
+  width: 90%;
+  margin: auto;
 }
