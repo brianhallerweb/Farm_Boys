@@ -6,9 +6,9 @@ var Users = require("./models/users");
 var Ads = require("./models/ads");
 var jwt = require("jsonwebtoken");
 var config = require("./config.js");
-mongoose.connect("mongodb://localhost/farm_boys");
+mongoose.connect(config.db);
 var app = express();
-app.use(express.static("public"));
+//app.use(express.static("public"));
 app.use(bodyParser.json());
 var morgan = require("morgan");
 
@@ -321,4 +321,11 @@ function log(requestType, isSuccess, result) {
   }
 }
 
-app.listen(3001);
+app.use(express.static("build"));
+
+app.get("*", (req, res) => {
+  console.log("dirname", __dirname);
+  res.sendFile(path.join(__dirname, "/build/index.html"));
+});
+
+app.listen(process.env.PORT || 3001);
