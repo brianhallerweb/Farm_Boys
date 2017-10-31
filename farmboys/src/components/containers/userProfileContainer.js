@@ -83,7 +83,9 @@ export default class UserProfileContainer extends Component {
   onContentStateChange: Function = contentState => {
     const { selectedAd } = this.state;
     this.setState({
-      selectedAd: Object.assign({}, selectedAd, { description: contentState })
+      selectedAd: Object.assign({}, selectedAd, {
+        description: contentState
+      })
     });
   };
 
@@ -287,7 +289,7 @@ export default class UserProfileContainer extends Component {
                 onClick={() => {
                   if (
                     window.confirm(
-                      "Are you sure you want to delete's this account?"
+                      "Are you sure you want to delete this account?"
                     ) == true
                   ) {
                     this.deleteProfile();
@@ -349,20 +351,18 @@ export default class UserProfileContainer extends Component {
                               type="text"
                               defaultValue={this.state.selectedAd.title}
                               onChange={e =>
-                                this.setState({ title: e.target.value })}
+                                (this.state.selectedAd.title = e.target.value)}
                             />
                             <input
                               type="text"
                               defaultValue={this.state.selectedAd.price}
                               onChange={e =>
-                                this.setState({ price: e.target.value })}
+                                (this.state.selectedAd.price = e.target.value)}
                             />
                             <select
                               autofocus={this.state.selectedAd.type}
                               onChange={e => {
-                                this.setState({
-                                  type: e.target.value
-                                });
+                                this.state.selectedAd.type = e.target.value;
                               }}
                             >
                               {this.setType(
