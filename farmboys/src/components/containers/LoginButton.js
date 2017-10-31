@@ -10,9 +10,8 @@ export default class LoginButton extends Component {
         <Button onClick={this.props.resetModal}>Login</Button>
         {this.props.display ? (
           <div className="modal">
-            <p>Click to get the full Modal experience!</p>
-            <Button onClick={this.open}>Launch demo modal</Button>
             <Modal
+              bsSize="small"
               show={this.props.display}
               onHide={() => {
                 this.props.resetModal();

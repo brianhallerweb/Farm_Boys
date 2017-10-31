@@ -129,7 +129,7 @@ export default class briansCreateNewAd extends Component {
                   <Editor
                     editorClassName="targetEditor"
                     onContentStateChange={this.onContentStateChange}
-                    placeholder={"Begin typing..."}
+                    placeholder={"Describe your product"}
                     spellCheck={true}
                     toolbar={{
                       options: [

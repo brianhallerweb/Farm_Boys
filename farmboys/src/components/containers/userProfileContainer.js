@@ -296,7 +296,7 @@ export default class UserProfileContainer extends Component {
                   onClick={() => this.editProfile()}
                 >
                   Update Account
-                </Button>
+                </Button>{" "}
                 <Button
                   bsStyle="danger"
                   bsSize="xs"

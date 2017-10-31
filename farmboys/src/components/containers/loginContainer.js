@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { bake_cookie, read_cookie, delete_cookie } from "sfcookies";
 import "whatwg-fetch";
 import SignUpModalContainer from "./signUpModalContainer";
+import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 
 let base64 = require("base-64");
 
@@ -47,44 +48,79 @@ export default class LoginContainer extends Component {
   render() {
     return (
       <div className="loginContainer">
-        <div>
-          <div className="userName">
-            <div style={{ margin: "10px" }}>Username</div>
-            <div>
-              <input
-                onChange={e => this.setState({ username: e.target.value })}
-                type="text"
-              />
+        {/*
+          <div>
+            <div className="userName">
+              <div style={{ margin: "10px" }}>Username</div>
+              <div>
+                <input
+                  onChange={e => this.setState({ username: e.target.value })}
+                  type="text"
+                />
+              </div>
+              <div style={{ margin: "10px" }}>Password</div>
+              <div style={{ margin: "10px" }}>
+                <input
+                  onChange={e => this.setState({ password: e.target.value })}
+                  type="password"
+                />
+              </div>
+              <div style={{ margin: "10px" }}>
+                <Button
+                  onClick={e => {
+                    this.validateLogin({
+                      username: this.state.username,
+                      password: this.state.password
+                    });
+                  }}
+                >
+                  Login
+                </Button>
+              </div>
+              <div style={{ margin: "10px" }}>
+                <Button onClick={() => this.signUpToggle()}>Sign Up!</Button>
+              </div>
+              {this.state.signUpModal ? (
+                <SignUpModalContainer validateLogin={this.validateLogin} />
+              ) : (
+                ""
+              )}
             </div>
-            <div style={{ margin: "10px" }}>Password</div>
-            <div style={{ margin: "10px" }}>
-              <input
-                onChange={e => this.setState({ password: e.target.value })}
-                type="password"
-              />
-            </div>
-            <div style={{ margin: "10px" }}>
-              <button
-                onClick={e => {
-                  this.validateLogin({
-                    username: this.state.username,
-                    password: this.state.password
-                  });
-                }}
-              >
-                Login
-              </button>
-            </div>
-            <div style={{ margin: "10px" }}>
-              <button onClick={() => this.signUpToggle()}>Sign Up!</button>
-            </div>
-            {this.state.signUpModal ? (
-              <SignUpModalContainer validateLogin={this.validateLogin} />
-            ) : (
-              ""
-            )}
           </div>
-        </div>
+        */}
+        <form>
+          <FormGroup>
+            <ControlLabel>Username</ControlLabel>
+            <FormControl
+              type="text"
+              onChange={e => this.setState({ username: e.target.value })}
+            />
+          </FormGroup>
+          <FormGroup>
+            <ControlLabel>Password</ControlLabel>
+            <FormControl
+              type="password"
+              onChange={e => this.setState({ password: e.target.value })}
+            />
+          </FormGroup>
+          <Button
+            bsStyle="primary"
+            onClick={e => {
+              this.validateLogin({
+                username: this.state.username,
+                password: this.state.password
+              });
+            }}
+          >
+            Login
+          </Button>{" "}
+          <Button onClick={() => this.signUpToggle()}>Sign Up!</Button>
+        </form>
+        {this.state.signUpModal ? (
+          <SignUpModalContainer validateLogin={this.validateLogin} />
+        ) : (
+          ""
+        )}
       </div>
     );
   }
