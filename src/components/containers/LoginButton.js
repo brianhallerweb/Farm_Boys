@@ -17,7 +17,6 @@ export default class LoginButton extends Component {
                 this.props.resetModal();
               }}
             >
-              <Modal.Header closeButton />
               <Modal.Body>
                 <LoginContainer {...this.props} />
               </Modal.Body>

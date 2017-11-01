@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import "../styles/adContainer.css";
 import React, { Component } from "react";
 import AdModalContainer from "./adModalContainer";
@@ -18,7 +17,6 @@ export default class AdContainer extends Component {
   }
 
   render() {
-    console.log("Active Page", this.props.activePage);
     return (
       <div className="adList">
         <Table hover responsive>

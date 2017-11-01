@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "../styles/userProfileContainer.css";
 import "whatwg-fetch";
-import { read_cookie, delete_cookie } from "sfcookies";
+import { delete_cookie } from "sfcookies";
 import {
   Button,
   Modal,
@@ -12,7 +12,6 @@ import {
   ControlLabel,
   InputGroup
 } from "react-bootstrap";
-import { convertFromRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import "../styles/react-draft-wysiwyg.css";
 import * as EmailValidator from "email-validator";
@@ -207,7 +206,6 @@ export default class UserProfileContainer extends Component {
   };
 
   render() {
-    const { contentState } = this.state.selectedAd;
     let oldPasswordStyle =
       this.state.oldPassword === this.state.password
         ? { color: "#000000" }
@@ -222,7 +220,7 @@ export default class UserProfileContainer extends Component {
         <div className="gridProfile">
           <div className="user">
             <div>
-              <Link to="/">Home</Link>
+              <Link to="/">back</Link>
             </div>
             <div className="userInfo">
               <div>
@@ -301,7 +299,7 @@ export default class UserProfileContainer extends Component {
                   </div>
                 )}
                 <Button
-                  bsStyle="info"
+                  bsStyle="primary"
                   bsSize="xs"
                   onClick={() => this.editProfile()}
                 >
@@ -342,7 +340,7 @@ export default class UserProfileContainer extends Component {
                       </td>
                       <td>
                         <Button
-                          bsStyle="info"
+                          bsStyle="primary"
                           bsSize="xs"
                           onClick={() =>
                             this.setState({
@@ -386,74 +384,6 @@ export default class UserProfileContainer extends Component {
                 >
                   <Modal.Header closeButton />
                   <Modal.Body>
-                    {/*<div className="modalBody">
-                    <div>
-                      <div className="content">
-                        <span>
-                          <h1>Edit your Ad</h1>
-                          <input
-                            type="text"
-                            defaultValue={this.state.selectedAd.title}
-                            onChange={e =>
-                              (this.state.selectedAd.title = e.target.value)}
-                          />
-                          <input
-                            type="text"
-                            defaultValue={this.state.selectedAd.price}
-                            onChange={e =>
-                              (this.state.selectedAd.price = e.target.value)}
-                          />
-                          <select
-                            autofocus={this.state.selectedAd.type}
-                            onChange={e => {
-                              this.state.selectedAd.type = e.target.value;
-                            }}
-                          >
-                            {this.setType(
-                              this.state.selectedAd.type || "meat"
-                            )}
-                          </select>
-                        </span>
-                        <div className="targetAll">
-                          {this.state.selectedAd.description ? (
-                            <Editor
-                              initialContentState={
-                                this.state.selectedAd.description
-                              }
-                              editorClassName="targetEditor"
-                              onContentStateChange={this.onContentStateChange}
-                              placeholder={"Begin typing..."}
-                              spellCheck={true}
-                              toolbar={{
-                                options: [
-                                  "inline",
-                                  "blockType",
-                                  "fontSize",
-                                  "fontFamily",
-                                  "list",
-                                  "textAlign",
-                                  "colorPicker"
-                                ],
-                                inline: { inDropdown: true },
-                                list: { inDropdown: true },
-                                textAlign: { inDropdown: true }
-                              }}
-                            />
-                          ) : (
-                            ""
-                          )}
-                        </div>
-                        <button
-                          onClick={() =>
-                            this.editAd(this.state.selectedAd._id)}
-                        >
-                          Update Ad
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-*/}
-
                     <form>
                       <FormGroup>
                         <ControlLabel>Title</ControlLabel>
