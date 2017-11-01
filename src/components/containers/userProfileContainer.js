@@ -471,8 +471,10 @@ export default class UserProfileContainer extends Component {
 
                       <Button
                         bsStyle="primary"
-                        type="submit"
-                        onClick={() => this.editAd(this.state.selectedAd._id)}
+                        onClick={e => {
+                          e.preventDefault()
+                          this.editAd(this.state.selectedAd._id)
+                        }
                       >
                         Update Ad
                       </Button>

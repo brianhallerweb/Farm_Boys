@@ -168,7 +168,8 @@ export default class briansCreateNewAd extends Component {
           </Modal.Body>
           <Modal.Footer>
             <Button
-              onClick={() => {
+              onClick={e => {
+                e.preventDefault();
                 this.setState({ showModal: false });
                 this.props.resetModal();
               }}
