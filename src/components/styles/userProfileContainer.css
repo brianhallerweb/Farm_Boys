@@ -8,6 +8,10 @@
   margin-right: auto;
 }
 
+.input {
+  width: 50px;
+}
+
 .user {
   border: solid #000000;
   margin: 0 auto;

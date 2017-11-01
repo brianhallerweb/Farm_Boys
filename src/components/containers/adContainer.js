@@ -18,7 +18,7 @@ export default class AdContainer extends Component {
   }
 
   render() {
-    console.log(this.state.activePage);
+    console.log("Active Page", this.props.activePage);
     return (
       <div className="adList">
         <Table hover responsive>
@@ -54,7 +54,7 @@ export default class AdContainer extends Component {
           boundaryLinks
           items={10}
           maxButtons={3}
-          activePage={this.state.activePage}
+          activePage={this.props.activePage}
           onSelect={e => this.props.handlePagination(e)}
         />
         {this.state.modal}

@@ -42,9 +42,8 @@ export default class FrontPageContainer extends Component {
   };
 
   handlePagination(eventKey) {
-    this.setState({
-      activePage: eventKey - 1
-    });
+    this.state.activePage = eventKey;
+    this.updateAds();
   }
 
   toggleLoginModal = () => {
@@ -75,10 +74,12 @@ export default class FrontPageContainer extends Component {
     }
   };
 
-  updateAds = () =>
-    fetch("/farm_boys/ads/?page=" + this.state.activePage)
+  updateAds = () => {
+    let page = this.state.activePage > 0 ? this.state.activePage - 1 : 0;
+    fetch("/farm_boys/ads/?page=" + page)
       .then(response => response.json())
       .then(ads => this.setState({ ads }));
+  };
 
   query = queryString => {
     fetch("/farm_boys/ads/" + queryString)
@@ -93,7 +94,6 @@ export default class FrontPageContainer extends Component {
   };
 
   render() {
-    console.log(this.state.activePage);
     let greeting = "";
     if (this.state.user) {
       greeting = <h5>Welcome, {this.state.user.username}</h5>;
@@ -102,7 +102,7 @@ export default class FrontPageContainer extends Component {
       <div class="grid">
         <div class="title">
           {greeting}
-          <Button onClick={this.clickAddAd}>Make Add</Button>
+          <Button onClick={this.clickAddAd}>Make Ad</Button>
           {this.state.adModal ? (
             <NewPostModalContainer
               resetModal={this.resetAdModal}
@@ -149,6 +149,7 @@ export default class FrontPageContainer extends Component {
           <AdContainer
             ads={this.state.ads}
             handlePagination={this.handlePagination.bind(this)}
+            activePage={this.state.activePage}
           />
         </div>
       </div>

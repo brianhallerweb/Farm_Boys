@@ -228,6 +228,7 @@ app.post("/farm_boys/ads", function(req, res) {
 
 app.get("/farm_boys/ads", function(req, res) {
   let filter = {};
+  let itemsPerPage = 6;
   if (req.query.type) {
     filter.type = req.query.type;
   }
@@ -245,9 +246,9 @@ app.get("/farm_boys/ads", function(req, res) {
     filter.userId = req.query.id;
   }
   Ads.find(filter)
-    .skip(parseInt(req.query.page * 3))
+    .skip(parseInt(req.query.page * itemsPerPage))
     .sort("-date")
-    .limit(parseInt(3))
+    .limit(parseInt(itemsPerPage))
     .exec(function(err, result) {
       if (err) {
         log("get", false, result);

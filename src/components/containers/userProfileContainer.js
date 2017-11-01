@@ -92,7 +92,8 @@ export default class UserProfileContainer extends Component {
     const { selectedAd } = this.state;
     this.setState({
       selectedAd: Object.assign({}, selectedAd, {
-        description: contentState
+        description: contentState,
+        type: "meat"
       })
     });
   };
@@ -107,7 +108,8 @@ export default class UserProfileContainer extends Component {
         title: this.state.selectedAd.title,
         type: this.state.selectedAd.type,
         description: this.state.selectedAd.description,
-        price: this.state.selectedAd.price
+        price: this.state.selectedAd.price,
+        contact: this.state.selectedAd.contact
       })
     }).then(() => {
       this.setState({ showModal: false });
@@ -459,7 +461,7 @@ export default class UserProfileContainer extends Component {
                           type="text"
                           defaultValue={this.state.selectedAd.title}
                           onChange={e =>
-                            this.setState({ title: e.target.value })}
+                            (this.state.selectedAd.title = e.target.value)}
                         />
                       </FormGroup>
                       <FormGroup>
@@ -470,7 +472,7 @@ export default class UserProfileContainer extends Component {
                             type="number"
                             defaultValue={this.state.selectedAd.price}
                             onChange={e =>
-                              this.setState({ price: e.target.value })}
+                              (this.state.selectedAd.price = e.target.value)}
                           />
 
                           <InputGroup.Addon>.00</InputGroup.Addon>
@@ -483,9 +485,7 @@ export default class UserProfileContainer extends Component {
                           componentClass="select"
                           placeholder="select"
                           onChange={e => {
-                            this.setState({
-                              type: e.target.value
-                            });
+                            this.state.selectedAd.type = e.target.value;
                           }}
                         >
                           <option>Meat</option>,
@@ -535,25 +535,21 @@ export default class UserProfileContainer extends Component {
                           type="text"
                           defaultValue={this.state.selectedAd.contact}
                           onChange={e =>
-                            this.setState({ contact: e.target.value })}
+                            (this.state.selectedAd.contact = e.target.value)}
                         />
                       </FormGroup>
 
                       <Button
                         bsStyle="primary"
                         type="submit"
-                        onClick={() => this.createAd()}
+                        onClick={() => this.editAd(this.state.selectedAd._id)}
                       >
                         Update Ad
                       </Button>
                     </form>
                   </Modal.Body>
                   <Modal.Footer>
-                    <Button
-                      onClick={() => this.editAd(this.state.selectedAd._id)}
-                    >
-                      Close
-                    </Button>
+                    <Button onClick={() => console.log("closed")}>Close</Button>
                   </Modal.Footer>
                 </Modal>
               </div>
