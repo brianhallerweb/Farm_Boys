@@ -130,7 +130,7 @@ export default class SignUpModalContainer extends Component {
               bsStyle="primary"
               onClick={e => {
                 e.preventDefault();
-                this.createUser.bind(this);
+                this.createUser();
               }}
             >
               Create Account
