@@ -81,6 +81,7 @@ export default class FrontPageContainer extends Component {
           alert("Your search did not match any results.");
         } else {
           this.setState({ ads });
+          this.state.activePage = 1;
         }
       });
   };
