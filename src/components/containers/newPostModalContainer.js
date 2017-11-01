@@ -10,7 +10,8 @@ import {
   Modal,
   FormGroup,
   FormControl,
-  ControlLabel
+  ControlLabel,
+  InputGroup
 } from "react-bootstrap";
 
 const content = {
@@ -97,11 +98,16 @@ export default class briansCreateNewAd extends Component {
               </FormGroup>
               <FormGroup>
                 <ControlLabel>Price</ControlLabel>
-                <FormControl
-                  type="number"
-                  placeholder="Enter price in dollars"
-                  onChange={e => this.setState({ price: e.target.value })}
-                />
+                <InputGroup>
+                  <InputGroup.Addon>$</InputGroup.Addon>
+                  <FormControl
+                    type="number"
+                    placeholder="Enter price in dollars"
+                    onChange={e => this.setState({ price: e.target.value })}
+                  />
+
+                  <InputGroup.Addon>.00</InputGroup.Addon>
+                </InputGroup>
               </FormGroup>
 
               <FormGroup controlId="formControlsSelect">

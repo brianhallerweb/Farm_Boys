@@ -8,7 +8,7 @@ var jwt = require("jsonwebtoken");
 var config = require("./config.js");
 mongoose.connect(config.database);
 var app = express();
-// app.use(express.static("public"));
+app.use(express.static("public"));
 app.use(bodyParser.json());
 var morgan = require("morgan");
 
@@ -321,7 +321,7 @@ function log(requestType, isSuccess, result) {
   }
 }
 
-app.use(express.static("build"));
+// app.use(express.static("build"));
 
 app.get("*", (req, res) => {
   console.log("dirname", __dirname);
