@@ -31,9 +31,10 @@ export default class SignUpModalContainer extends Component {
     let username = this.state.username;
     let password = this.state.password;
     let isValid = true;
+    let alertString = "";
     if (!EmailValidator.validate(this.state.email)) {
       isValid = false;
-      alert("Invalid email address!");
+      alertString += "Invalid email address!\n";
     }
     if (phone(this.state.phonenumber).length > 0) {
       this.state.phonenumber = phone(this.state.phonenumber)
@@ -41,14 +42,14 @@ export default class SignUpModalContainer extends Component {
         .concat();
     } else {
       isValid = false;
-      alert("Invalid phone number!");
+      alertString += "Invalid phone number!\n";
     }
     fetch("/farm_boys/users/?username=" + this.state.username)
       .then(response => response.json())
       .then(user => {
-        if (user) {
+        if (username !== "" && user) {
           isValid = false;
-          alert("That username is taken!");
+          alertString += "That username is taken!\n";
         }
       })
       .then(() => {
@@ -67,6 +68,8 @@ export default class SignUpModalContainer extends Component {
               alert("Account creation successful!");
               this.setState({ showModal: false });
             });
+        } else {
+          alert(alertString);
         }
       });
   }

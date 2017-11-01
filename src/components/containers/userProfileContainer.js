@@ -481,7 +481,9 @@ export default class UserProfileContainer extends Component {
                     </form>
                   </Modal.Body>
                   <Modal.Footer>
-                    <Button onClick={() => console.log("closed")}>Close</Button>
+                    <Button onClick={() => this.setState({ showModal: false })}>
+                      Close
+                    </Button>
                   </Modal.Footer>
                 </Modal>
               </div>

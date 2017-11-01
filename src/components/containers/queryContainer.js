@@ -12,16 +12,14 @@ export default class QueryContainer extends Component {
     let typeQuery = "";
     let searchQuery = "";
     if (this.state.type !== "All Types") {
-      typeQuery = "?type=" + this.state.type;
+      typeQuery = "&type=" + this.state.type;
     }
     if (this.state.search !== "") {
       if (typeQuery === "") {
-        searchQuery = "?title=" + this.state.search;
-      } else {
         searchQuery = "&title=" + this.state.search;
       }
     }
-    return typeQuery + searchQuery;
+    return "?page=0" + typeQuery + searchQuery;
   }
 
   /*This is the code inside render that was working for search<div className="queryContainer">
