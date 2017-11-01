@@ -28,7 +28,6 @@ export default class AdModalContainer extends Component {
               <div>
                 <h1>{this.props.ad.title}</h1>
               </div>
-              <span />
               <div>
                 <h2>{this.props.ad.image}</h2>
               </div>
