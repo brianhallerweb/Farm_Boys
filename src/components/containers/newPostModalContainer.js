@@ -63,6 +63,7 @@ export default class briansCreateNewAd extends Component {
         title: this.state.title,
         type: this.state.type,
         price: this.state.price,
+        contact: this.state.contact,
         contentState: this.state.contentState
       })
     })

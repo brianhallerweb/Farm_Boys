@@ -8,7 +8,10 @@ var jwt = require("jsonwebtoken");
 var config = require("./config.js");
 mongoose.connect(config.database);
 var app = express();
+<<<<<<< HEAD
 app.use(express.static("public"));
+=======
+>>>>>>> 06883a3122605755090b7c247a67f7a6a2acefed
 app.use(bodyParser.json());
 var morgan = require("morgan");
 
@@ -211,6 +214,7 @@ app.post("/farm_boys/ads", function(req, res) {
     description: req.body.contentState,
     image: req.body.image,
     price: req.body.price,
+    contact: req.body.contact,
     date: date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear()
   }).save(function(err, result) {
     if (err) {
