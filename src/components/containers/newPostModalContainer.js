@@ -28,10 +28,11 @@ const content = {
   ]
 };
 
-export default class briansCreateNewAd extends Component {
+export default class NewPostModalContainer extends Component {
   constructor(props) {
     super(props);
     const contentState = convertFromRaw(content);
+    this.initialContentState = contentState;
     this.state = {
       showModal: true,
       userId: "",
@@ -43,6 +44,15 @@ export default class briansCreateNewAd extends Component {
     };
   }
 
+  validate(ad) {
+    const requiredFields = ["title", "price", "contact"];
+
+    return (
+      this.state.contentState !== this.initialContentState &&
+      requiredFields.length === requiredFields.filter(field => ad[field]).length
+    );
+  }
+
   onContentStateChange: Function = contentState => {
     this.setState({
       contentState
@@ -50,29 +60,33 @@ export default class briansCreateNewAd extends Component {
   };
 
   createAd() {
-    fetch("/farm_boys/ads", {
-      method: "post",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        userId: this.props.user._id,
-        username: this.props.user.username,
-        title: this.state.title,
-        type: this.state.type,
-        price: this.state.price,
-        contact: this.state.contact,
-        contentState: this.state.contentState
+    if (this.validate(this.state)) {
+      fetch("/farm_boys/ads", {
+        method: "post",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          userId: this.props.user._id,
+          username: this.props.user.username,
+          title: this.state.title,
+          type: this.state.type,
+          price: this.state.price,
+          contact: this.state.contact,
+          contentState: this.state.contentState
+        })
       })
-    })
-      .then(function(response) {
-        return response.json();
-      })
-      .then(() => {
-        this.props.updateAds();
-        this.props.resetModal();
-      });
+        .then(function(response) {
+          return response.json();
+        })
+        .then(() => {
+          this.props.updateAds();
+          this.props.resetModal();
+        });
+    } else {
+      alert("error");
+    }
   }
 
   render() {
@@ -163,6 +177,7 @@ export default class briansCreateNewAd extends Component {
 
               <Button
                 bsStyle="primary"
+                disabled={!this.validate(this.state)}
                 onClick={e => {
                   e.preventDefault();
                   this.createAd();

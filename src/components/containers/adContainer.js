@@ -48,10 +48,7 @@ export default class AdContainer extends Component {
           bsSize="small"
           prev
           next
-          ellipsis
-          boundaryLinks
           items={10}
-          maxButtons={3}
           activePage={this.props.activePage}
           onSelect={e => this.props.handlePagination(e)}
         />
