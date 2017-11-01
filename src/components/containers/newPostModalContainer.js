@@ -37,7 +37,7 @@ export default class briansCreateNewAd extends Component {
       showModal: true,
       userId: "",
       title: "",
-      type: "",
+      type: "Meat",
       price: "",
       contact: "",
       contentState
@@ -115,7 +115,7 @@ export default class briansCreateNewAd extends Component {
                 <ControlLabel>Food Type</ControlLabel>
                 <FormControl
                   componentClass="select"
-                  placeholder="Select"
+                  placeholder="select"
                   onChange={e => {
                     this.setState({
                       type: e.target.value

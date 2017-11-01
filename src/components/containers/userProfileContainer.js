@@ -3,7 +3,15 @@ import { Link } from "react-router-dom";
 import "../styles/userProfileContainer.css";
 import "whatwg-fetch";
 import { read_cookie, delete_cookie } from "sfcookies";
-import { Button, Modal, Table } from "react-bootstrap";
+import {
+  Button,
+  Modal,
+  Table,
+  FormGroup,
+  FormControl,
+  ControlLabel,
+  InputGroup
+} from "react-bootstrap";
 import { convertFromRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import "../styles/react-draft-wysiwyg.css";
@@ -369,7 +377,6 @@ export default class UserProfileContainer extends Component {
 
               <div className="modal">
                 <Modal
-                  bsSize="large"
                   show={this.state.showModal}
                   onHide={() => {
                     this.setState({ showModal: false });
@@ -377,78 +384,173 @@ export default class UserProfileContainer extends Component {
                 >
                   <Modal.Header closeButton />
                   <Modal.Body>
-                    <div className="modalBody">
-                      <div>
-                        <div className="content">
-                          <span>
-                            <h1>Edit your Ad</h1>
-                            <input
-                              type="text"
-                              defaultValue={this.state.selectedAd.title}
-                              onChange={e =>
-                                (this.state.selectedAd.title = e.target.value)}
-                            />
-                            <input
-                              type="text"
-                              defaultValue={this.state.selectedAd.price}
-                              onChange={e =>
-                                (this.state.selectedAd.price = e.target.value)}
-                            />
-                            <select
-                              autofocus={this.state.selectedAd.type}
-                              onChange={e => {
-                                this.state.selectedAd.type = e.target.value;
-                              }}
-                            >
-                              {this.setType(
-                                this.state.selectedAd.type || "meat"
-                              )}
-                            </select>
-                          </span>
-                          <div className="targetAll">
-                            {this.state.selectedAd.description ? (
-                              <Editor
-                                initialContentState={
-                                  this.state.selectedAd.description
-                                }
-                                editorClassName="targetEditor"
-                                onContentStateChange={this.onContentStateChange}
-                                placeholder={"Begin typing..."}
-                                spellCheck={true}
-                                toolbar={{
-                                  options: [
-                                    "inline",
-                                    "blockType",
-                                    "fontSize",
-                                    "fontFamily",
-                                    "list",
-                                    "textAlign",
-                                    "colorPicker"
-                                  ],
-                                  inline: { inDropdown: true },
-                                  list: { inDropdown: true },
-                                  textAlign: { inDropdown: true }
-                                }}
-                              />
-                            ) : (
-                              ""
-                            )}
-                          </div>
-                          <button
-                            onClick={() =>
-                              this.editAd(this.state.selectedAd._id)}
+                    {/*<div className="modalBody">
+                    <div>
+                      <div className="content">
+                        <span>
+                          <h1>Edit your Ad</h1>
+                          <input
+                            type="text"
+                            defaultValue={this.state.selectedAd.title}
+                            onChange={e =>
+                              (this.state.selectedAd.title = e.target.value)}
+                          />
+                          <input
+                            type="text"
+                            defaultValue={this.state.selectedAd.price}
+                            onChange={e =>
+                              (this.state.selectedAd.price = e.target.value)}
+                          />
+                          <select
+                            autofocus={this.state.selectedAd.type}
+                            onChange={e => {
+                              this.state.selectedAd.type = e.target.value;
+                            }}
                           >
-                            Update Ad
-                          </button>
+                            {this.setType(
+                              this.state.selectedAd.type || "meat"
+                            )}
+                          </select>
+                        </span>
+                        <div className="targetAll">
+                          {this.state.selectedAd.description ? (
+                            <Editor
+                              initialContentState={
+                                this.state.selectedAd.description
+                              }
+                              editorClassName="targetEditor"
+                              onContentStateChange={this.onContentStateChange}
+                              placeholder={"Begin typing..."}
+                              spellCheck={true}
+                              toolbar={{
+                                options: [
+                                  "inline",
+                                  "blockType",
+                                  "fontSize",
+                                  "fontFamily",
+                                  "list",
+                                  "textAlign",
+                                  "colorPicker"
+                                ],
+                                inline: { inDropdown: true },
+                                list: { inDropdown: true },
+                                textAlign: { inDropdown: true }
+                              }}
+                            />
+                          ) : (
+                            ""
+                          )}
                         </div>
+                        <button
+                          onClick={() =>
+                            this.editAd(this.state.selectedAd._id)}
+                        >
+                          Update Ad
+                        </button>
                       </div>
                     </div>
+                  </div>
+*/}
+
+                    <form>
+                      <FormGroup>
+                        <ControlLabel>Title</ControlLabel>
+                        <FormControl
+                          type="text"
+                          defaultValue={this.state.selectedAd.title}
+                          onChange={e =>
+                            this.setState({ title: e.target.value })}
+                        />
+                      </FormGroup>
+                      <FormGroup>
+                        <ControlLabel>Price</ControlLabel>
+                        <InputGroup>
+                          <InputGroup.Addon>$</InputGroup.Addon>
+                          <FormControl
+                            type="number"
+                            defaultValue={this.state.selectedAd.price}
+                            onChange={e =>
+                              this.setState({ price: e.target.value })}
+                          />
+
+                          <InputGroup.Addon>.00</InputGroup.Addon>
+                        </InputGroup>
+                      </FormGroup>
+
+                      <FormGroup controlId="formControlsSelect">
+                        <ControlLabel>Food Type</ControlLabel>
+                        <FormControl
+                          componentClass="select"
+                          placeholder="select"
+                          onChange={e => {
+                            this.setState({
+                              type: e.target.value
+                            });
+                          }}
+                        >
+                          <option>Meat</option>,
+                          <option>Dairy</option>,
+                          <option>Dessert</option>,
+                          <option>Produce</option>,
+                          <option>Other</option>
+                        </FormControl>
+                      </FormGroup>
+
+                      <FormGroup controlId="formControlsTextarea">
+                        <ControlLabel>Description</ControlLabel>
+                        <div className="targetAll">
+                          {this.state.selectedAd.description ? (
+                            <Editor
+                              initialContentState={
+                                this.state.selectedAd.description
+                              }
+                              editorClassName="targetEditor"
+                              onContentStateChange={this.onContentStateChange}
+                              placeholder={"Begin typing..."}
+                              spellCheck={true}
+                              toolbar={{
+                                options: [
+                                  "inline",
+                                  "blockType",
+                                  "fontSize",
+                                  "fontFamily",
+                                  "list",
+                                  "textAlign",
+                                  "colorPicker"
+                                ],
+                                inline: { inDropdown: true },
+                                list: { inDropdown: true },
+                                textAlign: { inDropdown: true }
+                              }}
+                            />
+                          ) : (
+                            ""
+                          )}
+                        </div>
+                      </FormGroup>
+
+                      <FormGroup>
+                        <ControlLabel>Contact</ControlLabel>
+                        <FormControl
+                          type="text"
+                          defaultValue={this.state.selectedAd.contact}
+                          onChange={e =>
+                            this.setState({ contact: e.target.value })}
+                        />
+                      </FormGroup>
+
+                      <Button
+                        bsStyle="primary"
+                        type="submit"
+                        onClick={() => this.createAd()}
+                      >
+                        Update Ad
+                      </Button>
+                    </form>
                   </Modal.Body>
                   <Modal.Footer>
                     <Button
-                      onClick={() => {
-                        this.setState({ showModal: false });
-                      }}
+                      onClick={() => this.editAd(this.state.selectedAd._id)}
                     >
                       Close
                     </Button>

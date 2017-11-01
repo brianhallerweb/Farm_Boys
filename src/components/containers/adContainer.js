@@ -2,12 +2,15 @@ import { Link } from "react-router-dom";
 import "../styles/adContainer.css";
 import React, { Component } from "react";
 import AdModalContainer from "./adModalContainer";
-import { Table } from "react-bootstrap";
+import { Table, Pagination } from "react-bootstrap";
 
 export default class AdContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = { modal: "" };
+    this.state = {
+      modal: "",
+      activePage: ""
+    };
     this.resetModal = this.resetModal.bind(this);
   }
 
@@ -15,7 +18,15 @@ export default class AdContainer extends Component {
     this.setState({ modal: "" });
   }
 
+  handleSelect(eventKey) {
+    console.log("this is the event key" + eventKey);
+    this.setState({
+      activePage: eventKey
+    });
+  }
+
   render() {
+    console.log(this.state.activePage);
     return (
       <div className="adList">
         <Table hover responsive>
@@ -43,6 +54,17 @@ export default class AdContainer extends Component {
             ))}
           </tbody>
         </Table>
+        <Pagination
+          bsSize="small"
+          prev
+          next
+          ellipsis
+          boundaryLinks
+          items={10}
+          maxButtons={3}
+          activePage={this.state.activePage}
+          onSelect={e => this.handleSelect(e)}
+        />
         {this.state.modal}
       </div>
     );
