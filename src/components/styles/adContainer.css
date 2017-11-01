@@ -1,14 +1,7 @@
 .adContainer {
-  text-align: center;
-  align-items: center;
-  background-color: #d2d9d2;
   width: 75vw;
   height: auto;
   cursor: pointer;
-}
-
-.list {
-  list-style-type: none;
 }
 
 .adList {

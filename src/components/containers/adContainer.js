@@ -19,6 +19,13 @@ export default class AdContainer extends Component {
     return (
       <div className="adList">
         <Table hover responsive>
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Price</th>
+              <th>Date</th>
+            </tr>
+          </thead>
           <tbody>
             {this.props.ads.map(ad => (
               <tr

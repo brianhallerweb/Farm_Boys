@@ -94,7 +94,7 @@ export default class FrontPageContainer extends Component {
       <div class="grid">
         <div class="title">
           {greeting}
-          <Button onClick={this.clickAddAd}>Make Ad</Button>
+          <Button onClick={this.clickAddAd}>Make Add</Button>
           {this.state.adModal ? (
             <NewPostModalContainer
               resetModal={this.resetAdModal}

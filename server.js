@@ -8,6 +8,10 @@ var jwt = require("jsonwebtoken");
 var config = require("./config.js");
 mongoose.connect(config.database);
 var app = express();
+<<<<<<< HEAD
+app.use(express.static("public"));
+=======
+>>>>>>> 06883a3122605755090b7c247a67f7a6a2acefed
 app.use(bodyParser.json());
 var morgan = require("morgan");
 
@@ -320,6 +324,11 @@ function log(requestType, isSuccess, result) {
   }
 }
 
-app.use(express.static("public"));
+// app.use(express.static("build"));
+
+app.get("*", (req, res) => {
+  console.log("dirname", __dirname);
+  res.sendFile(path.join(__dirname, "/build/index.html"));
+});
 
 app.listen(process.env.PORT || 3001);
