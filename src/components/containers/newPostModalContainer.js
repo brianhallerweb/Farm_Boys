@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import "../styles/newPostContainer.css";
 import "whatwg-fetch";
-import { convertFromRaw, convertToRaw } from "draft-js";
+import { convertFromRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import "../styles/react-draft-wysiwyg.css";
 import {
@@ -86,7 +85,6 @@ export default class briansCreateNewAd extends Component {
             this.props.resetModal();
           }}
         >
-          <Modal.Header closeButton />
           <Modal.Body>
             <form>
               <FormGroup>
@@ -106,8 +104,6 @@ export default class briansCreateNewAd extends Component {
                     placeholder="Enter price in dollars"
                     onChange={e => this.setState({ price: e.target.value })}
                   />
-
-                  <InputGroup.Addon>.00</InputGroup.Addon>
                 </InputGroup>
               </FormGroup>
 

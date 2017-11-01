@@ -6,15 +6,7 @@ import NewPostModalContainer from "./newPostModalContainer";
 import LoginButton from "./LoginButton.js";
 import { Link } from "react-router-dom";
 import { read_cookie, delete_cookie } from "sfcookies";
-import {
-  Navbar,
-  Nav,
-  NavItem,
-  NavDropdown,
-  MenuItem,
-  Button
-} from "react-bootstrap";
-import _ from "lodash";
+import { Button } from "react-bootstrap";
 export default class FrontPageContainer extends Component {
   constructor(props) {
     super(props);
@@ -93,7 +85,6 @@ export default class FrontPageContainer extends Component {
   };
 
   render() {
-    console.log(this.state.activePage);
     let greeting = "";
     if (this.state.user) {
       greeting = <h5>Welcome, {this.state.user.username}</h5>;
@@ -102,7 +93,7 @@ export default class FrontPageContainer extends Component {
       <div class="grid">
         <div class="title">
           {greeting}
-          <Button onClick={this.clickAddAd}>Make Add</Button>
+          <Button onClick={this.clickAddAd}>Make Ad</Button>
           {this.state.adModal ? (
             <NewPostModalContainer
               resetModal={this.resetAdModal}

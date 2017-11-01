@@ -1,4 +1,3 @@
-import LoginContainer from "./loginContainer";
 import QueryContainer from "./queryContainer";
 import "../styles/sideNavContainer.css";
 import React from "react";

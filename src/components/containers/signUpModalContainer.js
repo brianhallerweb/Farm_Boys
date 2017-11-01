@@ -1,8 +1,13 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import "../styles/signUpModalContainer.css";
 import "whatwg-fetch";
-import { Button, Modal } from "react-bootstrap";
+import {
+  Button,
+  Modal,
+  FormGroup,
+  FormControl,
+  ControlLabel
+} from "react-bootstrap";
 import * as EmailValidator from "email-validator";
 
 var phone = require("phone");
@@ -17,9 +22,9 @@ export default class SignUpModalContainer extends Component {
       email: "",
       passwordConfirm: "",
       admin: false,
-      showModal: true
+      showModal: true,
+      validPassword: ""
     };
-    console.log(this.props);
   }
 
   createUser() {
@@ -67,70 +72,70 @@ export default class SignUpModalContainer extends Component {
   }
 
   render() {
-    if (this.state.password === this.state.passwordConfirm) {
-      var style = {
-        color: "#000000"
-      };
-    } else {
-      var style = {
-        color: "#ff0000"
-      };
-    }
     return (
       <Modal
+        bsSize="small"
         show={this.state.showModal}
         onHide={() => {
           this.setState({ showModal: false });
-          this.props.resetModal();
+          this.props.signUpToggle();
         }}
       >
-        <Modal.Header closeButton />
         <Modal.Body>
-          <div className="signUpModalContainer">
-            <div>
-              <input
-                onChange={e => this.setState({ username: e.target.value })}
+          <form>
+            <FormGroup>
+              <ControlLabel>Username</ControlLabel>
+              <FormControl
                 type="text"
-                placeholder="username"
+                onChange={e => this.setState({ username: e.target.value })}
               />
-            </div>
-            <div>
-              <input
+            </FormGroup>
+            <FormGroup>
+              <ControlLabel>Email</ControlLabel>
+
+              <FormControl
                 onChange={e => this.setState({ email: e.target.value })}
                 type="text"
-                placeholder="email"
               />
-            </div>
-            <div>
-              <input
+            </FormGroup>
+            <FormGroup>
+              <ControlLabel>Phone number</ControlLabel>
+
+              <FormControl
                 onChange={e => this.setState({ phonenumber: e.target.value })}
                 type="text"
-                placeholder="phonenumber"
               />
-            </div>
-            <div>
-              <input
+            </FormGroup>
+            <FormGroup>
+              <ControlLabel>Password</ControlLabel>
+
+              <FormControl
                 onChange={e => this.setState({ password: e.target.value })}
                 type="password"
-                placeholder="password"
               />
-            </div>
-            <div>
-              <input
+            </FormGroup>
+            <FormGroup>
+              <ControlLabel>Confirm password</ControlLabel>
+
+              <FormControl
                 onChange={e =>
-                  this.setState({ passwordConfirm: e.target.value })}
+                  this.setState({
+                    passwordConfirm: e.target.value,
+                    validPassword: e.target.value
+                  })}
                 type="password"
-                placeholder="Confirm Password"
-                style={style}
               />
-            </div>
-            <button onClick={this.createUser.bind(this)}>Create Account</button>
-          </div>
+            </FormGroup>
+            <Button bsStyle="primary" onClick={this.createUser.bind(this)}>
+              Create Account
+            </Button>
+          </form>
         </Modal.Body>
         <Modal.Footer>
           <Button
             onClick={() => {
               this.setState({ showModal: false });
+              this.props.signUpToggle();
             }}
           >
             Close

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "../styles/loginContainer.css";
-import { Link } from "react-router-dom";
-import { bake_cookie, read_cookie, delete_cookie } from "sfcookies";
+import { bake_cookie } from "sfcookies";
 import "whatwg-fetch";
 import SignUpModalContainer from "./signUpModalContainer";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
@@ -117,7 +116,10 @@ export default class LoginContainer extends Component {
           <Button onClick={() => this.signUpToggle()}>Sign Up!</Button>
         </form>
         {this.state.signUpModal ? (
-          <SignUpModalContainer validateLogin={this.validateLogin} />
+          <SignUpModalContainer
+            signUpToggle={this.signUpToggle.bind(this)}
+            validateLogin={this.validateLogin}
+          />
         ) : (
           ""
         )}
