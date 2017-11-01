@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import AdModalContainer from "./adModalContainer";
 import { Table, Pagination } from "react-bootstrap";
 import "whatwg-fetch";
+import moment from "moment";
 
 export default class AdContainer extends Component {
   constructor(props) {
@@ -45,7 +46,7 @@ export default class AdContainer extends Component {
               >
                 <td>{ad.title}</td>
                 <td>${ad.price}</td>
-                <td>{ad.date}</td>
+                <td>{moment(ad.date).format("MMM Do YYYY")}</td>
               </tr>
             ))}
           </tbody>

@@ -11,6 +11,7 @@
     "express": "^4.16.2",
     "jsonwebtoken": "^8.1.0",
     "lodash": "^4.17.4",
+    "moment": "^2.19.1",
     "mongoose": "^4.12.2",
     "mongoose-pagination": "^1.0.0",
     "morgan": "^1.9.0",

@@ -12,7 +12,7 @@ var schema = new Schema(
     image: String,
     price: Number,
     contact: String,
-    date: String,
+    date: { type: Date, default: new Date() },
     searchText: String
   },
   {
