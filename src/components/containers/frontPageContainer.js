@@ -34,7 +34,6 @@ export default class FrontPageContainer extends Component {
     })
       .then(response => response.json())
       .then(user => {
-        console.log(this.state.user);
         if (user._id) {
           this.setState({ user: user });
         }
@@ -70,7 +69,7 @@ export default class FrontPageContainer extends Component {
   };
 
   updateAds = () =>
-    fetch("/farm_boys/ads")
+    fetch("/farm_boys/ads/?page=1")
       .then(response => response.json())
       .then(ads => this.setState({ ads }));
 

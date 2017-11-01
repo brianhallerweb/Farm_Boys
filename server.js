@@ -244,11 +244,10 @@ app.get("/farm_boys/ads", function(req, res) {
   if (req.query.id) {
     filter.userId = req.query.id;
   }
-  console.log("serach query", filter);
   Ads.find(filter)
-    .skip(parseInt(0))
+    .skip(parseInt(req.query.page))
     .sort("-date")
-    .limit(parseInt(10))
+    .limit(parseInt(3))
     .exec(function(err, result) {
       if (err) {
         log("get", false, result);
