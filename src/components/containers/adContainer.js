@@ -8,21 +8,13 @@ export default class AdContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      modal: "",
-      activePage: ""
+      modal: ""
     };
     this.resetModal = this.resetModal.bind(this);
   }
 
   resetModal() {
     this.setState({ modal: "" });
-  }
-
-  handleSelect(eventKey) {
-    console.log("this is the event key" + eventKey);
-    this.setState({
-      activePage: eventKey
-    });
   }
 
   render() {
@@ -63,7 +55,7 @@ export default class AdContainer extends Component {
           items={10}
           maxButtons={3}
           activePage={this.state.activePage}
-          onSelect={e => this.handleSelect(e)}
+          onSelect={e => this.props.handlePagination(e)}
         />
         {this.state.modal}
       </div>

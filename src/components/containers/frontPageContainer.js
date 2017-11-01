@@ -22,7 +22,8 @@ export default class FrontPageContainer extends Component {
       ads: [],
       loginModal: false,
       adModal: false,
-      user: undefined
+      user: undefined,
+      activePage: 0
     };
   }
 
@@ -39,6 +40,12 @@ export default class FrontPageContainer extends Component {
         }
       });
   };
+
+  handlePagination(eventKey) {
+    this.setState({
+      activePage: eventKey - 1
+    });
+  }
 
   toggleLoginModal = () => {
     this.setState({ loginModal: !this.state.loginModal });
@@ -69,7 +76,7 @@ export default class FrontPageContainer extends Component {
   };
 
   updateAds = () =>
-    fetch("/farm_boys/ads/?page=1")
+    fetch("/farm_boys/ads/?page=" + this.state.activePage)
       .then(response => response.json())
       .then(ads => this.setState({ ads }));
 
@@ -86,6 +93,7 @@ export default class FrontPageContainer extends Component {
   };
 
   render() {
+    console.log(this.state.activePage);
     let greeting = "";
     if (this.state.user) {
       greeting = <h5>Welcome, {this.state.user.username}</h5>;
@@ -138,7 +146,10 @@ export default class FrontPageContainer extends Component {
           />
         </div>
         <div className="adContainer">
-          <AdContainer ads={this.state.ads} />
+          <AdContainer
+            ads={this.state.ads}
+            handlePagination={this.handlePagination.bind(this)}
+          />
         </div>
       </div>
     );

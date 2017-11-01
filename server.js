@@ -245,7 +245,7 @@ app.get("/farm_boys/ads", function(req, res) {
     filter.userId = req.query.id;
   }
   Ads.find(filter)
-    .skip(parseInt(req.query.page))
+    .skip(parseInt(req.query.page * 3))
     .sort("-date")
     .limit(parseInt(3))
     .exec(function(err, result) {
