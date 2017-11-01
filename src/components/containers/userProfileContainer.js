@@ -214,7 +214,6 @@ export default class UserProfileContainer extends Component {
       this.state.newPassword === this.state.confirmPassword
         ? { color: "#000000" }
         : { color: "#ff0000" };
-
     return (
       <div>
         <div className="gridProfile">
