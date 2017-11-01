@@ -8,7 +8,6 @@ var jwt = require("jsonwebtoken");
 var config = require("./config.js");
 mongoose.connect(config.database);
 var app = express();
-// app.use(express.static("public"));
 app.use(bodyParser.json());
 var morgan = require("morgan");
 
@@ -211,6 +210,7 @@ app.post("/farm_boys/ads", function(req, res) {
     description: req.body.contentState,
     image: req.body.image,
     price: req.body.price,
+    contact: req.body.contact,
     date: date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear()
   }).save(function(err, result) {
     if (err) {
@@ -321,11 +321,6 @@ function log(requestType, isSuccess, result) {
   }
 }
 
-app.use(express.static("build"));
-
-app.get("*", (req, res) => {
-  console.log("dirname", __dirname);
-  res.sendFile(path.join(__dirname, "/build/index.html"));
-});
+app.use(express.static("public"));
 
 app.listen(process.env.PORT || 3001);

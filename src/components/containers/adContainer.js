@@ -30,7 +30,7 @@ export default class AdContainer extends Component {
                   })}
               >
                 <td>{ad.title}</td>
-                <td>{ad.price}</td>
+                <td>${ad.price}</td>
                 <td>{ad.date}</td>
               </tr>
             ))}

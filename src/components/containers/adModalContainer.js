@@ -3,6 +3,7 @@ import { Button, Modal } from "react-bootstrap";
 import "../styles/adModalContainer.css";
 import { Link } from "react-router-dom";
 import draftToHtml from "draftjs-to-html";
+import { Label } from "react-bootstrap";
 
 export default class AdModalContainer extends Component {
   constructor(props) {
@@ -27,6 +28,7 @@ export default class AdModalContainer extends Component {
               <div>
                 <h1>{this.props.ad.title}</h1>
               </div>
+              <span />
               <div>
                 <h2>{this.props.ad.image}</h2>
               </div>
@@ -47,7 +49,10 @@ export default class AdModalContainer extends Component {
                 </h2>
               </div>
               <div>
-                <h2>Price: {this.props.ad.price}</h2>
+                <h2>Price: ${this.props.ad.price}</h2>
+              </div>
+              <div>
+                <h2>Contact: {this.props.ad.contact}</h2>
               </div>
             </div>
           </Modal.Body>
