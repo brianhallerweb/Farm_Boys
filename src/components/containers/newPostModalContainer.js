@@ -161,11 +161,7 @@ export default class briansCreateNewAd extends Component {
                 />
               </FormGroup>
 
-              <Button
-                bsStyle="primary"
-                type="submit"
-                onClick={() => this.createAd()}
-              >
+              <Button bsStyle="primary" onClick={() => this.createAd()}>
                 Post New Ad
               </Button>
             </form>
