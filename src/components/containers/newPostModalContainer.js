@@ -161,7 +161,13 @@ export default class briansCreateNewAd extends Component {
                 />
               </FormGroup>
 
-              <Button bsStyle="primary" onClick={() => this.createAd()}>
+              <Button
+                bsStyle="primary"
+                onClick={e => {
+                  e.preventDefault();
+                  this.createAd();
+                }}
+              >
                 Post New Ad
               </Button>
             </form>
@@ -169,7 +175,6 @@ export default class briansCreateNewAd extends Component {
           <Modal.Footer>
             <Button
               onClick={e => {
-                e.preventDefault();
                 this.setState({ showModal: false });
                 this.props.resetModal();
               }}

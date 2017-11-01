@@ -126,7 +126,13 @@ export default class SignUpModalContainer extends Component {
                 type="password"
               />
             </FormGroup>
-            <Button bsStyle="primary" onClick={this.createUser.bind(this)}>
+            <Button
+              bsStyle="primary"
+              onClick={e => {
+                e.preventDefault();
+                this.createUser.bind(this);
+              }}
+            >
               Create Account
             </Button>
           </form>

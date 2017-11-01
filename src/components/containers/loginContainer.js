@@ -113,7 +113,14 @@ export default class LoginContainer extends Component {
           >
             Login
           </Button>{" "}
-          <Button onClick={() => this.signUpToggle()}>Sign Up!</Button>
+          <Button
+            onClick={e => {
+              e.preventDefault();
+              this.signUpToggle();
+            }}
+          >
+            Sign Up!
+          </Button>
         </form>
         {this.state.signUpModal ? (
           <SignUpModalContainer
