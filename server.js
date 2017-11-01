@@ -228,7 +228,7 @@ app.post("/farm_boys/ads", function(req, res) {
 
 app.get("/farm_boys/ads", function(req, res) {
   let filter = {};
-  let itemsPerPage = 6;
+  let itemsPerPage = 3;
   if (req.query.type) {
     filter.type = req.query.type;
   }
