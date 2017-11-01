@@ -12,6 +12,7 @@ export default class FrontPageContainer extends Component {
     super(props);
     this.state = {
       ads: [],
+      queryString: "",
       loginModal: false,
       adModal: false,
       user: undefined,
@@ -66,24 +67,20 @@ export default class FrontPageContainer extends Component {
     }
   };
 
-  updateAds = () => {
-    let page = this.state.activePage > 0 ? this.state.activePage - 1 : 0;
-    fetch("/farm_boys/ads/?page=" + page)
-      .then(response => response.json())
-      .then(ads => this.setState({ ads }));
-  };
-
-  query = queryString => {
-    fetch("/farm_boys/ads/" + queryString)
-      .then(response => response.json())
-      .then(ads => {
-        if (ads.length === 0) {
-          alert("Your search did not match any results.");
-        } else {
-          this.setState({ ads });
-          this.state.activePage = 1;
-        }
-      });
+  updateAds = queryString => {
+    let updateState = {};
+    if (queryString !== undefined) {
+      updateState = { queryString, activePage: 0 };
+    }
+    this.setState(updateState, () => {
+      const page = Math.max(this.state.activePage - 1, 0);
+      fetch(`/farm_boys/ads?page=${page}&${this.state.queryString}`)
+        .then(response => response.json())
+        .then(ads => {
+          console.log(ads);
+          this.setState({ ads: ads.result, adCount: ads.count });
+        });
+    });
   };
 
   render() {
@@ -135,11 +132,12 @@ export default class FrontPageContainer extends Component {
         <div className="sidebar">
           <SideNavContainer
             loggedInUser={this.loggedInUser}
-            query={this.query}
+            query={this.updateAds}
           />
         </div>
         <div className="adContainer">
           <AdContainer
+            adCount={this.state.adCount}
             ads={this.state.ads}
             handlePagination={this.handlePagination.bind(this)}
             activePage={this.state.activePage}

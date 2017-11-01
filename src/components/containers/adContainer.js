@@ -8,7 +8,6 @@ export default class AdContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      totalAds: 0,
       modal: ""
     };
     this.resetModal = this.resetModal.bind(this);
@@ -18,15 +17,12 @@ export default class AdContainer extends Component {
     this.setState({ modal: "" });
   }
 
-  componentDidMount() {
-    fetch("/farm_boys/ads")
-      .then(response => response.json())
-      .then(ads => {
-        this.setState({ totalAds: ads.length });
-      });
-  }
-
   render() {
+    console.log("ads in ad container", this.props.ads);
+    let displayNum =
+      this.props.adCount >= 10
+        ? Math.ceil(this.props.adCount / 10)
+        : Math.floor(this.props.adCount / 10);
     return (
       <div className="adList">
         <Table hover responsive>
@@ -60,7 +56,7 @@ export default class AdContainer extends Component {
           next
           ellipsis
           boundaryLinks
-          items={Math.ceil(this.state.totalAds / 10)}
+          items={displayNum}
           maxButtons={3}
           activePage={this.props.activePage}
           onSelect={e => this.props.handlePagination(e)}

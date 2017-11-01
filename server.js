@@ -244,18 +244,23 @@ app.get("/farm_boys/ads", function(req, res) {
     filter.userId = req.query.id;
   }
   if (req.query.page) {
+    Ads.find(filter);
     Ads.find(filter)
-      .skip(parseInt(req.query.page * itemsPerPage))
-      .sort("-date")
-      .limit(parseInt(itemsPerPage))
-      .exec(function(err, result) {
-        if (err) {
-          log("get", false, result);
-          res.status(500).json(err);
-        } else {
-          log("get", true, result);
-          res.json(result);
-        }
+      .count()
+      .exec((err, count) => {
+        Ads.find(filter)
+          .skip(parseInt(req.query.page * itemsPerPage))
+          .sort("-date")
+          .limit(parseInt(itemsPerPage))
+          .exec(function(err, result) {
+            if (err) {
+              log("get", false, result);
+              res.status(500).json(err);
+            } else {
+              log("get", true, result);
+              res.json({ count, result });
+            }
+          });
       });
   } else {
     Ads.find(filter, function(err, result) {
