@@ -226,7 +226,7 @@ app.post("/farm_boys/ads", function(req, res) {
 
 app.get("/farm_boys/ads", function(req, res) {
   let filter = {};
-  let itemsPerPage = 3;
+  let itemsPerPage = 10;
   if (req.query.type) {
     filter.type = req.query.type;
   }
@@ -243,11 +243,22 @@ app.get("/farm_boys/ads", function(req, res) {
   if (req.query.id) {
     filter.userId = req.query.id;
   }
-  Ads.find(filter)
-    .skip(parseInt(req.query.page * itemsPerPage))
-    .sort("-date")
-    .limit(parseInt(itemsPerPage))
-    .exec(function(err, result) {
+  if (req.query.page) {
+    Ads.find(filter)
+      .skip(parseInt(req.query.page * itemsPerPage))
+      .sort("-date")
+      .limit(parseInt(itemsPerPage))
+      .exec(function(err, result) {
+        if (err) {
+          log("get", false, result);
+          res.status(500).json(err);
+        } else {
+          log("get", true, result);
+          res.json(result);
+        }
+      });
+  } else {
+    Ads.find(filter, function(err, result) {
       if (err) {
         log("get", false, result);
         res.status(500).json(err);
@@ -256,6 +267,7 @@ app.get("/farm_boys/ads", function(req, res) {
         res.json(result);
       }
     });
+  }
 });
 
 app.put("/farm_boys/ads/:_id", function(req, res) {
